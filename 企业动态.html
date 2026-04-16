@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>企业动态 - 风行 AI 文娱生态平台</title>
+  <meta name="description" content="风行AI文娱生态平台企业动态，实时了解FUNAI Token生态、视频技术云、政企合作等最新进展。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --secondary: #6366f1;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --max: 1200px;
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    ul { list-style: none; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .navbar.scrolled { height: 70px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .logo { height: 32px; width: auto; }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-link { font-size: 15px; font-weight: 600; color: var(--text-muted); position: relative; }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--primary); transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-nav {
+      background: var(--primary);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
+    }
+    .btn-nav:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+    /* Header Section */
+    .header-section {
+      padding: 180px 0 60px;
+      background: radial-gradient(circle at 0% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+                  radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.04em;
+    }
+    .section-desc {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 800px;
+      line-height: 1.7;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      margin-bottom: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 24px;
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+    .filter-tabs { display: flex; gap: 8px; }
+    .filter-tab {
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    .filter-tab:hover { background: #f1f5f9; color: var(--text); }
+    .filter-tab.active { background: var(--primary-soft); color: var(--primary); border-color: var(--primary-soft); }
+
+    .search-box {
+      position: relative;
+      max-width: 320px;
+      width: 100%;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px 12px 48px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+      font-size: 14px;
+      transition: all 0.3s;
+      background: #f8fafc;
+    }
+    .search-box input:focus { outline: none; border-color: var(--primary); background: white; box-shadow: 0 0 0 4px var(--primary-soft); }
+    .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+
+    /* News Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      padding-bottom: 100px;
+      min-height: 400px;
+    }
+
+    /* Featured News Card */
+    .news-featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      background: white;
+      padding: 48px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xl);
+      margin-bottom: 48px;
+      transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .news-featured:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 40px 80px rgba(0,0,0,0.08); }
+    .featured-img-box {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .featured-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    .news-featured:hover .featured-img-box img { transform: scale(1.08); }
+    
+    .featured-content { display: flex; flex-direction: column; }
+    .news-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .meta-tag {
+      padding: 6px 14px;
+      background: #f1f5f9;
+      color: var(--text);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .meta-tag.hot { background: #fee2e2; color: #ef4444; }
+    
+    .featured-content h3 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .news-featured:hover h3 { color: var(--primary); }
+    .featured-content p {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    /* Regular News Card */
+    .news-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .news-card:hover { transform: translateY(-16px); border-color: var(--primary); box-shadow: 0 30px 60px rgba(0,0,0,0.06); }
+    
+    .card-img-box {
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+    .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    .news-card:hover .card-img-box img { transform: scale(1.1); }
+    
+    .card-body { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-body h3 {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      transition: color 0.3s ease;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .news-card:hover .card-body h3 { color: var(--primary); }
+    .card-body p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid #f1f5f9;
+      margin-top: auto;
+    }
+    .news-link {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .news-link i { transition: transform 0.3s ease; }
+    .news-card:hover .news-link i { transform: translateX(5px); }
+
+    /* Subscription Section */
+    .subscribe-section { padding: 120px 0; }
+    .subscribe-box {
+      background: linear-gradient(135deg, #fff7ed 0%, #f0f7ff 100%);
+      border: 1px solid var(--border);
+      border-radius: 48px;
+      padding: 80px;
+      color: var(--text);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.03);
+    }
+    .subscribe-box::before {
+      content: ''; position: absolute; top: -10%; right: -5%; width: 400px; height: 400px;
+      background: var(--primary); opacity: 0.05; border-radius: 50%; filter: blur(60px);
+    }
+    .sub-content h2 { font-size: 40px; font-weight: 900; margin-bottom: 24px; letter-spacing: -0.02em; }
+    .sub-content p { font-size: 18px; color: var(--text-muted); line-height: 1.7; }
+    .sub-form { display: flex; gap: 16px; position: relative; z-index: 2; }
+    .sub-form input {
+      flex-grow: 1;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 18px 24px;
+      border-radius: 16px;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .sub-form input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px var(--primary-soft); }
+    .btn-sub {
+      background: var(--primary);
+      color: white;
+      padding: 18px 40px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    .btn-sub:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3); }
+
+    /* Footer */
+    .footer { padding: 100px 0 40px; background: white; border-top: 1px solid var(--border); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 80px; margin-bottom: 80px; }
+    .footer-brand p { color: var(--text-muted); margin-top: 24px; max-width: 320px; font-size: 14px; }
+    .footer-col h4 { font-size: 16px; font-weight: 800; margin-bottom: 32px; color: var(--text); text-transform: uppercase; letter-spacing: 1px; }
+    .footer-col ul { display: grid; gap: 16px; }
+    .footer-col a { color: var(--text-muted); font-size: 14px; font-weight: 500; }
+    .footer-col a:hover { color: var(--primary); }
+    .footer-bottom { padding-top: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; color: var(--text-muted); font-size: 13px; }
+
+    /* Empty State */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 100px 0;
+      display: none;
+    }
+    .empty-state i { font-size: 64px; color: #e2e8f0; margin-bottom: 24px; }
+    .empty-state p { font-size: 18px; color: var(--text-muted); }
+
+    /* Mobile */
+    @media (max-width: 1024px) {
+      .news-grid { grid-template-columns: repeat(2, 1fr); }
+      .news-featured { grid-template-columns: 1fr; padding: 32px; gap: 32px; }
+      .subscribe-box { grid-template-columns: 1fr; padding: 60px 40px; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .header-section { padding-top: 140px; }
+      .news-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .filter-bar { flex-direction: column; align-items: stretch; }
+      .filter-tabs { overflow-x: auto; padding-bottom: 8px; }
+      .search-box { max-width: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="首页.html"><img src="风行LOGO.png" alt="风行" class="logo" /></a>
+      <div class="nav-links">
+        <a href="首页.html" class="nav-link">首页</a>
+        <a href="产品中心.html" class="nav-link">产品中心</a>
+        <a href="政企服务.html" class="nav-link">政企服务</a>
+        <a href="企业动态.html" class="nav-link active">企业动态</a>
+        <a href="关于风行.html" class="nav-link">关于风行</a>
+        <a href="加入风行.html" class="nav-link">加入风行</a>
+      </div>
+      <div class="nav-actions">
+        <a href="联系我们.html" class="btn-nav">商务合作</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="header-section">
+      <div class="container" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-newspaper"></i> Enterprise Dynamics</span>
+        <h1 class="section-title">企业动态</h1>
+        <p class="section-desc">聚焦风行AI文娱生态平台最新动态，实时追踪视频技术云、FUNAI Token生态及全场景视听矩阵的全球化进展。</p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="filter-bar" data-aos="fade-up">
+        <div class="filter-tabs">
+          <div class="filter-tab active" data-cat="all">全部动态</div>
+          <div class="filter-tab" data-cat="eco">生态升级</div>
+          <div class="filter-tab" data-cat="b2b">政企合作</div>
+          <div class="filter-tab" data-cat="tech">产品技术</div>
+          <div class="filter-tab" data-cat="award">荣誉奖项</div>
+        </div>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="newsSearch" placeholder="搜索动态关键词..." />
+        </div>
+      </div>
+
+      <div class="news-grid" id="newsGrid">
+        <!-- Featured News -->
+        <article class="news-featured" data-aos="fade-up" data-category="eco">
+          <div class="featured-img-box">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="FUNAI Token 2.0" />
+          </div>
+          <div class="featured-content">
+            <div class="news-meta">
+              <span class="meta-tag hot">头条</span>
+              <span>2024-06-15</span>
+            </div>
+            <h3>FUNAI Token 2.0重磅上线，全面赋能政企生态权益</h3>
+            <p>针对政企客户新增「视频技术云服务兑换」「定制化营销方案」等专属权益，进一步打通B端服务的token生态闭环，显著降低政企合作成本，实现生态价值全面飞跃。</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
+              <span class="meta-tag">FUNAI Token</span>
+              <span class="meta-tag">生态升级</span>
+              <span class="meta-tag">政企服务</span>
+            </div>
+            <a href="动态详情.html" class="news-link">阅读全文 <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <!-- News Card 2 -->
+        <article class="news-card" data-aos="fade-up" data-aos-delay="100" data-category="b2b">
+          <div class="card-img-box">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Cloud Cooperation" />
+          </div>
+          <div class="card-body">
+            <div class="news-meta">
+              <span class="meta-tag">政企合作</span>
+              <span>2024-05-28</span>
+            </div>
+            <h3>风行携手省级广电集团，共建下一代视频技术云平台</h3>
+            <p>依托风行视频云的算力优势与AI编解码技术，共同打造面向政务宣传与文旅推广的专属视频云生态，助力广电系统数字化升级。</p>
+            <div class="card-footer">
+              <a href="动态详情.html" class="news-link">查看详情 <i class="fas fa-chevron-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 3 -->
+        <article class="news-card" data-aos="fade-up" data-aos-delay="200" data-category="award">
+          <div class="card-img-box">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Award" />
+          </div>
+          <div class="card-body">
+            <div class="news-meta">
+              <span class="meta-tag">荣誉奖项</span>
+              <span>2024-05-10</span>
+            </div>
+            <h3>荣膺 2024 中国 AI 文娱创新企业 TOP10，领跑视频营销</h3>
+            <p>凭借AI驱动的视频营销解决方案和FUNAI Token创新模式，风行从数百家参评企业中脱颖而出，成为唯一入选的视频技术云服务商。</p>
+            <div class="card-footer">
+              <span class="news-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 4 -->
+        <article class="news-card" data-aos="fade-up" data-aos-delay="300" data-category="tech">
+          <div class="card-img-box">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Product Update" />
+          </div>
+          <div class="card-body">
+            <div class="news-meta">
+              <span class="meta-tag">产品升级</span>
+              <span>2024-04-22</span>
+            </div>
+            <h3>橙星推 V3.0 发布：AI 赋能政企视频营销效率翻倍</h3>
+            <p>新增 200 余套政务专属模板，支持AI智能字幕生成与智能配音，助力政企创作效率提升 60% 以上，开启数智化宣传新篇章。</p>
+            <div class="card-footer">
+              <span class="news-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 5 -->
+        <article class="news-card" data-aos="fade-up" data-aos-delay="400" data-category="eco">
+          <div class="card-img-box">
+            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=600&q=80" alt="Ecosystem" />
+          </div>
+          <div class="card-body">
+            <div class="news-meta">
+              <span class="meta-tag">生态拓展</span>
+              <span>2024-04-08</span>
+            </div>
+            <h3>风行梦工厂入驻 30+ 文创园区，赋能中小企业数字化</h3>
+            <p>为中小文娱企业提供一站式AI制作与云端算力服务，首批已覆盖北上广杭等核心城市，助力中小微企业跨越数字化门槛。</p>
+            <div class="card-footer">
+              <span class="news-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 6 -->
+        <article class="news-card" data-aos="fade-up" data-aos-delay="500" data-category="b2b">
+          <div class="card-img-box">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="Project" />
+          </div>
+          <div class="card-body">
+            <div class="news-meta">
+              <span class="meta-tag">中标公告</span>
+              <span>2024-03-20</span>
+            </div>
+            <h3>中标市级政务视频中台项目，助力政务宣传数智化升级</h3>
+            <p>为全市 30 余个政府部门提供全流程视频中台服务，实现宣传内容的统一管理、智能分发与高效触达。</p>
+            <div class="card-footer">
+              <span class="news-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </article>
+
+        <div class="empty-state" id="emptyState">
+          <i class="fas fa-search"></i>
+          <p>没有找到相关动态，请尝试其他关键词</p>
+        </div>
+      </div>
+
+      <div class="load-more" data-aos="fade-up">
+        <button class="btn-outline"><i class="fas fa-sync-alt"></i> 加载更多动态</button>
+      </div>
+    </section>
+
+    <section class="subscribe-section">
+      <div class="container">
+        <div class="subscribe-box" data-aos="zoom-in">
+          <div class="sub-content">
+            <h2>第一时间掌握<br />AI 文娱生态风向</h2>
+            <p>订阅风行企业周刊，获取最新的产品动态、行业洞察与生态权益更新。</p>
+          </div>
+          <div class="sub-form">
+            <input type="email" placeholder="输入您的电子邮箱" />
+            <button class="btn-sub">立即订阅</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="风行LOGO.png" alt="风行" class="logo" />
+          <p>致力于成为最懂内容、最懂用户的 AI 科技公司，为全球用户提供极致的数字化价值。</p>
+        </div>
+        <div class="footer-col">
+          <h4>产品生态</h4>
+          <ul>
+            <li><a href="产品中心.html">产品矩阵</a></li>
+            <li><a href="橙星梦.html">梦工厂</a></li>
+            <li><a href="视听平台生态.html">视听生态</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>关于风行</h4>
+          <ul>
+            <li><a href="关于风行.html">公司介绍</a></li>
+            <li><a href="企业动态.html">新闻动态</a></li>
+            <li><a href="加入风行.html">加入我们</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>联系我们</h4>
+          <ul>
+            <li><a href="联系我们.html">商务合作</a></li>
+            <li><a href="联系我们.html">客户支持</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 风行在线. All rights reserved.</p>
+        <div style="display: flex; gap: 32px;">
+          <a href="隐私政策.html">隐私政策</a>
+          <a href="用户协议.html">用户协议</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Filtering and Searching Logic
+    const tabs = document.querySelectorAll('.filter-tab');
+    const newsCards = document.querySelectorAll('.news-featured, .news-card');
+    const searchInput = document.getElementById('newsSearch');
+    const emptyState = document.getElementById('emptyState');
+
+    function filterNews() {
+      const activeCat = document.querySelector('.filter-tab.active').dataset.cat;
+      const searchText = searchInput.value.toLowerCase();
+      let visibleCount = 0;
+
+      newsCards.forEach(card => {
+        const cat = card.dataset.category;
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        const desc = card.querySelector('p').innerText.toLowerCase();
+        
+        const matchesCat = activeCat === 'all' || cat === activeCat;
+        const matchesSearch = title.includes(searchText) || desc.includes(searchText);
+
+        if (matchesCat && matchesSearch) {
+          card.style.display = card.classList.contains('news-featured') ? 'grid' : 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        filterNews();
+      });
+    });
+
+    searchInput.addEventListener('input', filterNews);
+  </script>
+</body>
+</html>

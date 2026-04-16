@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>用户协议 - 风行 AI 文娱生态平台</title>
+  <meta name="description" content="风行AI用户协议，规定了您在使用风行产品和服务时的权利与义务。" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --max: 1000px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    ul { list-style: disc; margin-left: 24px; margin-bottom: 24px; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 80px; background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex; align-items: center;
+      transition: all 0.4s;
+    }
+    .navbar.scrolled { height: 70px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .logo { height: 32px; }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-link { font-size: 15px; font-weight: 600; color: var(--text-muted); position: relative; }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .nav-link.active::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
+      background: var(--primary);
+    }
+
+    /* Page Header */
+    .legal-header {
+      padding: 160px 0 80px;
+      background: radial-gradient(circle at 0% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 40%);
+      text-align: center;
+    }
+    .legal-header h1 { font-size: 48px; font-weight: 900; margin-bottom: 16px; }
+    .legal-header p { color: var(--text-muted); font-size: 16px; }
+
+    /* Content Area */
+    .legal-content { padding-bottom: 120px; font-size: 17px; color: var(--text); }
+    .legal-content section { margin-bottom: 60px; }
+    .legal-content h2 { font-size: 24px; font-weight: 800; margin-bottom: 24px; color: var(--text); display: flex; align-items: center; gap: 12px; }
+    .legal-content h2::before { content: ''; width: 4px; height: 24px; background: var(--primary); border-radius: 4px; }
+    .legal-content p { margin-bottom: 24px; line-height: 1.8; }
+    .legal-content .update-time { font-size: 14px; color: var(--text-muted); margin-bottom: 48px; display: block; }
+
+    /* Footer */
+    .footer { padding: 80px 0 40px; background: var(--bg-alt); border-top: 1px solid var(--border); }
+    .footer-bottom { text-align: center; color: var(--text-muted); font-size: 14px; }
+
+    @media (max-width: 768px) {
+      .legal-header { padding: 120px 0 60px; }
+      .legal-header h1 { font-size: 32px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="首页.html"><img src="风行LOGO.png" alt="风行" class="logo" /></a>
+      <div class="nav-links">
+        <a href="首页.html" class="nav-link">首页</a>
+        <a href="产品中心.html" class="nav-link">产品中心</a>
+        <a href="企业动态.html" class="nav-link">企业动态</a>
+        <a href="关于风行.html" class="nav-link">关于我们</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="legal-header" data-aos="fade-up">
+      <h1>用户协议</h1>
+      <p>感谢您使用风行！本协议规定了您在使用我们的产品和服务时的法律条款。</p>
+    </header>
+
+    <div class="legal-content" data-aos="fade-up">
+      <span class="update-time">最后更新日期：2024年01月01日</span>
+
+      <section>
+        <h2>协议的确认与接受</h2>
+        <p>欢迎您与风行在线（以下简称“风行”）共同签署本《用户协议》（以下简称“本协议”）。在您注册、登录、使用风行服务前，请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款。</p>
+      </section>
+
+      <section>
+        <h2>服务内容</h2>
+        <p>风行为您提供包括但不限于视频点播、AI 视频创作工具（橙星梦工厂）、精准营销（橙星推）等多元化视听与文创服务。具体服务内容以风行实际提供的功能为准。</p>
+      </section>
+
+      <section>
+        <h2>账户注册与管理</h2>
+        <ul>
+          <li>您应当按照法律法规的要求，提供真实、准确、完整的注册信息。</li>
+          <li>您的账户仅限您本人使用，不得转让、借用或租给他人。</li>
+          <li>您应对账户下的所有行为负责，包括通过该账户发布的任何内容及产生的任何法律后果。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>用户行为规范</h2>
+        <p>在使用风行服务时，您承诺遵守以下规范：</p>
+        <ul>
+          <li>不利用 AI 创作工具生成、传播包含色情、暴力、恐怖、欺诈或侵犯他人名誉的信息。</li>
+          <li>不进行任何干扰服务正常运行的行为，如攻击服务器或非法抓取数据。</li>
+          <li>尊重风行及他人的知识产权，不利用本服务从事侵权活动。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>知识产权</h2>
+        <p>风行产品中包含的文字、图片、音频、视频、商标及 AI 算法等，均受著作权、商标权及其他法律的保护。除非另有约定，风行服务中产生的 AI 作品的版权归属及使用规则应遵守风行相关的专项协议。</p>
+      </section>
+
+      <section>
+        <h2>法律管辖与争议解决</h2>
+        <p>本协议的成立、生效、履行、解释及争议的解决均应适用中华人民共和国法律。若发生任何争议，应友好协商解决；协商不成的，任何一方均可向风行住所地有管辖权的人民法院提起诉讼。</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2024 风行在线. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+  </script>
+</body>
+</html>

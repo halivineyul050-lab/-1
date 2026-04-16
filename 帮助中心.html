@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>帮助中心 - 风行 AI 文娱生态平台</title>
+  <meta name="description" content="风行AI帮助中心，为您提供常见问题解答、产品使用指南、账户与安全设置等支持服务。" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.85);
+      --border: #e2e8f0;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --max: 1100px;
+      --shadow-lg: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    ul { list-style: none; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 80px; background: var(--glass);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000; display: flex; align-items: center;
+      transition: all 0.4s;
+    }
+    .navbar.scrolled { height: 70px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
+    .nav-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .logo { height: 32px; }
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+    }
+    .nav-link { font-size: 15px; font-weight: 600; color: var(--text-muted); position: relative; }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .nav-link.active::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
+      background: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      background: radial-gradient(circle at 50% 0%, var(--primary-soft) 0%, transparent 40%);
+    }
+    .hero h1 { font-size: 56px; font-weight: 900; margin-bottom: 24px; letter-spacing: -0.03em; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 48px; }
+    .search-bar {
+      position: relative; max-width: 640px; margin: 0 auto;
+    }
+    .search-bar input {
+      width: 100%; padding: 20px 60px 20px 24px; border-radius: 16px;
+      border: 1px solid var(--border); font-size: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      outline: none; transition: all 0.3s;
+    }
+    .search-bar input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+    .search-bar .fa-search { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 20px; }
+
+    /* Category Section */
+    .category-section { padding: 0 0 100px; margin-top: -40px; position: relative; z-index: 2; }
+    .category-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;
+    }
+    .category-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 32px; text-align: center; border: 1px solid var(--border);
+      transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .category-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
+    .category-icon {
+      width: 64px; height: 64px; background: var(--primary-soft); color: var(--primary);
+      border-radius: 20px; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin: 0 auto 24px; transition: all 0.3s ease;
+    }
+    .category-card:hover .category-icon { transform: scale(1.1) rotate(-10deg); }
+    .category-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    .category-card p { font-size: 14px; color: var(--text-muted); }
+
+    /* FAQ Section */
+    .faq-section { padding-bottom: 120px; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header h2 { font-size: 36px; font-weight: 800; }
+    .faq-container { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-md); margin-bottom: 16px; overflow: hidden;
+    }
+    .faq-question {
+      padding: 20px 24px; font-size: 17px; font-weight: 700;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-question .fas {
+      transition: transform 0.3s; font-size: 14px; color: var(--primary);
+    }
+    .faq-item.active .faq-question .fas { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+    }
+    .faq-answer p {
+      padding: 0 24px 20px; color: var(--text-muted); font-size: 15px; border-top: 1px solid var(--border); padding-top: 20px; margin-top: -1px;
+    }
+
+    /* CTA Section */
+    .cta-section { background: var(--white); padding: 80px 0; text-align: center; border-top: 1px solid var(--border); }
+    .cta-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+    .cta-section p { color: var(--text-muted); margin-bottom: 32px; }
+    .btn-primary { background: var(--primary); color: white; padding: 16px 32px; border-radius: 99px; font-weight: 700; box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2); }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+    /* Footer */
+    .footer { padding: 80px 0 40px; background: var(--white); border-top: 1px solid var(--border); }
+    .footer-bottom { text-align: center; color: var(--text-muted); font-size: 14px; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-top: 16px; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 140px 0 80px; }
+      .hero h1 { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="首页.html"><img src="风行LOGO.png" alt="风行" class="logo" /></a>
+      <div class="nav-links">
+        <a href="首页.html" class="nav-link">首页</a>
+        <a href="产品中心.html" class="nav-link">产品中心</a>
+        <a href="企业动态.html" class="nav-link">企业动态</a>
+        <a href="关于风行.html" class="nav-link">关于我们</a>
+        <a href="帮助中心.html" class="nav-link active">帮助中心</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" data-aos="fade-up">
+      <div class="container">
+        <h1>您好，有什么可以帮您？</h1>
+        <p>我们在这里为您解答疑问。输入关键词搜索或浏览下方常见问题分类。</p>
+        <div class="search-bar">
+          <input type="text" placeholder="例如：如何使用橙星梦工厂？" />
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section container">
+        <div class="category-grid">
+            <a href="#faq" class="category-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="category-icon"><i class="fas fa-user-circle"></i></div>
+                <h3>账户与安全</h3>
+                <p>注册、登录、密码找回、安全设置等</p>
+            </a>
+            <a href="#faq" class="category-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="category-icon"><i class="fas fa-cubes"></i></div>
+                <h3>产品使用</h3>
+                <p>橙星梦工厂、橙星推等产品功能指引</p>
+            </a>
+            <a href="#faq" class="category-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="category-icon"><i class="fas fa-credit-card"></i></div>
+                <h3>计费与订阅</h3>
+                <p>套餐选择、支付方式、发票开具等</p>
+            </a>
+            <a href="#faq" class="category-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="category-icon"><i class="fas fa-gavel"></i></div>
+                <h3>版权与规则</h3>
+                <p>内容版权归属、社区规范与使用条款</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="faq-section container" id="faq">
+        <div class="section-header" data-aos="fade-up">
+            <h2>常见问题</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">风行AI主要提供哪些服务？<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>风行AI提供一站式的智能视听文娱解决方案，核心包括AI内容创作（如橙星梦工厂）、全域内容分发与变现（如橙星推）、以及面向企业的大屏和视频技术云服务。</p></div>
+            </div>
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">如何开始使用“橙星梦工厂”？<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>您可以访问我们的产品中心，找到“橙星梦工厂”并点击“免费试用”。注册账户后，即可根据引导开始您的第一个AI视频创作项目。</p></div>
+            </div>
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">忘记密码了怎么办？<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>在登录页面点击“忘记密码”，系统会引导您通过注册手机号或邮箱重置密码。如果遇到问题，可以随时联系我们的客服支持。</p></div>
+            </div>
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">AI生成的内容版权归谁所有？<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>根据我们的用户协议，您在使用风行AI服务创作并导出后，拥有该作品的商业使用权。具体细则请参照《用户协议》中的知识产权部分。</p></div>
+            </div>
+             <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">风行AI的服务如何收费？<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>我们提供多种灵活的订阅方案，包括免费试用版、个人版和企业版。不同版本的功能和资源配额不同，详情请访问我们的“产品中心”或联系商务合作。</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container" data-aos="zoom-in">
+        <h2>没有找到您想要的答案？</h2>
+        <p>我们的专家团队随时准备为您提供帮助。</p>
+        <a href="联系我们.html" class="btn-primary">联系我们</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2024 风行在线. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="隐私政策.html">隐私政策</a>
+        <a href="用户协议.html">用户协议</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true, offset: 50 });
+
+    // Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        // Close all items
+        faqItems.forEach(i => {
+            i.classList.remove('active');
+            i.querySelector('.faq-answer').style.maxHeight = null;
+        });
+        // Open the clicked one if it wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

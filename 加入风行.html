@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>加入风行 - 开启你的无限可能</title>
+  <meta name="description" content="加入风行，查看校园招聘、社会招聘与雇主品牌内容，了解团队方向、成长机会、招聘流程与岗位入口。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --secondary: #6366f1;
+      --bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.7);
+      --border: rgba(226, 232, 240, 0.8);
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 32px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    ul { list-style: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .navbar.scrolled { height: 70px; box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .logo { height: 32px; width: auto; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-link { font-size: 15px; font-weight: 600; color: var(--text-muted); }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
+    }
+    .nav-cta:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+    .hero {
+      padding: 180px 0 100px;
+      position: relative;
+      background: radial-gradient(circle at 0% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+                  radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: clamp(44px, 7vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      letter-spacing: -0.04em;
+    }
+    .hero-title span {
+      background: linear-gradient(to right, var(--text), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 20px;
+      color: var(--text-muted);
+      margin-bottom: 56px;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+    .hero-btns { display: flex; gap: 20px; }
+    .btn {
+      padding: 18px 40px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .btn-primary { background: var(--primary); color: white; box-shadow: 0 12px 24px var(--primary-glow); }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-4px); box-shadow: 0 16px 32px var(--primary-glow); }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: white; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+    .hero-visual { position: relative; padding: 20px; }
+    .hero-img-wrap {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .hero-visual:hover .hero-img-wrap { transform: perspective(1000px) rotateY(0deg); }
+    .hero-img {
+      width: 100%;
+      height: 540px;
+      object-fit: cover;
+      display: block;
+    }
+    .floating-card {
+      position: absolute;
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+    .f-1 { top: -20px; right: -20px; animation: float 6s ease-in-out infinite; }
+    .f-2 { bottom: 40px; left: -40px; animation: float 6s ease-in-out infinite 1.5s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Section Header */
+    .section { padding: 120px 0; }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 80px; }
+    .section-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.02em; }
+    .section-header p { font-size: 18px; color: var(--text-muted); }
+
+    /* Tracks */
+    .track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .track-card {
+      background: white;
+      padding: 48px 40px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .track-card:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: var(--shadow-xl); }
+    .track-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 107, 0, 0.1);
+      color: var(--primary);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 32px;
+    }
+    .track-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+    .track-card p { color: var(--text-muted); font-size: 16px; margin-bottom: 32px; }
+    .track-link { font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    .track-link i { transition: transform 0.3s ease; }
+    .track-card:hover .track-link i { transform: translateX(5px); }
+
+    /* Positions */
+    .pos-bg { background: #f8fafc; border-radius: var(--radius-xl); padding: 80px 60px; }
+    .pos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 48px; }
+    .pos-card {
+      background: white;
+      padding: 32px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .pos-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .pos-info h4 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .pos-info span { color: var(--text-muted); font-size: 14px; }
+    .pos-icon { width: 48px; height: 48px; border-radius: 12px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 20px; transition: all 0.3s ease; }
+    .pos-card:hover .pos-icon { background: var(--primary); color: white; }
+
+    /* Life */
+    .life-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .life-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .life-img-item { border-radius: var(--radius-lg); overflow: hidden; height: 260px; }
+    .life-img-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .life-img-item:hover img { transform: scale(1.1); }
+    .life-img-item:nth-child(2) { margin-top: 40px; }
+    .life-img-item:nth-child(3) { margin-top: -40px; }
+    .life-content h2 { font-size: 40px; font-weight: 800; margin-bottom: 24px; line-height: 1.2; }
+    .life-list { display: grid; gap: 24px; margin-top: 40px; }
+    .life-item { display: flex; gap: 20px; }
+    .life-item-icon { width: 48px; height: 48px; border-radius: 50%; background: #fff7ed; color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+    .life-item-info h5 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .life-item-info p { color: var(--text-muted); font-size: 15px; }
+
+    /* CTA Section */
+    .cta { padding-bottom: 120px; }
+    .cta-box {
+      background: linear-gradient(135deg, #fff7ed 0%, #f0f7ff 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 80px 40px;
+      text-align: center;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.03);
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      opacity: 0.05;
+      border-radius: 50%;
+    }
+    .cta-box h2 { font-size: 48px; font-weight: 800; margin-bottom: 24px; }
+    .cta-box p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 48px; }
+    .cta-btns { display: flex; justify-content: center; gap: 20px; }
+
+    /* Footer */
+    .footer { padding: 100px 0 40px; background: white; border-top: 1px solid var(--border); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 80px; margin-bottom: 80px; }
+    .footer-brand p { margin-top: 24px; color: var(--text-muted); max-width: 320px; font-size: 15px; }
+    .footer-col h4 { font-size: 16px; font-weight: 800; margin-bottom: 32px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-links { list-style: none; display: grid; gap: 16px; }
+    .footer-links a { color: var(--text-muted); font-weight: 600; font-size: 15px; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-bottom { padding-top: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 13px; }
+
+    /* Mobile */
+    @media (max-width: 1024px) {
+      .hero-grid, .life-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+      .hero-desc, .hero-btns { margin-left: auto; margin-right: auto; justify-content: center; }
+      .track-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero { padding-top: 140px; }
+      .track-grid, .pos-grid { grid-template-columns: 1fr; }
+      .cta-box h2 { font-size: 32px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="首页.html"><img src="风行LOGO.png" alt="风行" class="logo" /></a>
+      <div class="nav-links">
+        <a href="首页.html" class="nav-link">首页</a>
+        <a href="产品中心.html" class="nav-link">产品中心</a>
+        <a href="政企服务.html" class="nav-link">政企服务</a>
+        <a href="企业动态.html" class="nav-link">企业动态</a>
+        <a href="关于风行.html" class="nav-link">关于风行</a>
+        <a href="加入风行.html" class="nav-link active">加入风行</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#contact" class="btn-nav">立即投递</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content" data-aos="fade-right">
+          <span class="hero-tag">Join Funshion</span>
+          <h1 class="hero-title">与优秀的人<br /><span>定义内容新时代</span></h1>
+          <p class="hero-desc">在风行，我们不仅在构建产品，更是在通过 AI 与创意，重新定义内容的分发与价值。期待你的加入。</p>
+          <div class="hero-btns">
+            <a href="#tracks" class="btn btn-primary">探索职位 <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#life" class="btn btn-outline">了解生活</a>
+          </div>
+        </div>
+        <div class="hero-visual" data-aos="fade-left">
+          <div class="hero-img-wrap">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Team" class="hero-img" />
+          </div>
+          <div class="floating-card f-1">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #fff7ed; color: #ff6b00; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 15px;">快速成长</div>
+              <div style="font-size: 12px; color: var(--text-muted);">完善的培养体系</div>
+            </div>
+          </div>
+          <div class="floating-card f-2">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #eef2ff; color: #6366f1; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 15px;">快乐工作</div>
+              <div style="font-size: 12px; color: var(--text-muted);">极简人际关系</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tracks">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <h2>多元化的招聘频道</h2>
+          <p>无论你是初出茅庐的学子，还是经验丰富的专家，在这里都能找到属于你的舞台。</p>
+        </div>
+        <div class="track-grid">
+          <div class="track-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="track-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <h3>校园招聘</h3>
+            <p>面向应届毕业生及在校实习生，寻找最具潜力的未来之星。</p>
+            <a href="#" class="track-link">立即申请 <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+          <div class="track-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="track-icon"><i class="fa-solid fa-briefcase"></i></div>
+            <h3>社会招聘</h3>
+            <p>面向各领域专家，共同挑战行业难题，驱动业务增长。</p>
+            <a href="#" class="track-link">立即申请 <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+          <div class="track-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="track-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <h3>技术专项</h3>
+            <p>针对 AI、算法、架构等核心技术领域，寻找顶级极客。</p>
+            <a href="#" class="track-link">立即申请 <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="pos-bg" data-aos="zoom-in">
+          <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 16px;">热门职位方向</h2>
+            <p style="color: var(--text-muted);">聚焦核心业务，寻找志同道合的伙伴</p>
+          </div>
+          <div class="pos-grid">
+            <div class="pos-card">
+              <div class="pos-info">
+                <h4>AI 与算法</h4>
+                <span>大模型、推荐系统、内容生成</span>
+              </div>
+              <div class="pos-icon"><i class="fa-solid fa-microchip"></i></div>
+            </div>
+            <div class="pos-card">
+              <div class="pos-info">
+                <h4>技术研发</h4>
+                <span>Java, Go, 前端, 客户端, 测试</span>
+              </div>
+              <div class="pos-icon"><i class="fa-solid fa-code"></i></div>
+            </div>
+            <div class="pos-card">
+              <div class="pos-info">
+                <h4>产品与设计</h4>
+                <span>产品经理, UI/UX, 视觉设计</span>
+              </div>
+              <div class="pos-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            </div>
+            <div class="pos-card">
+              <div class="pos-info">
+                <h4>内容与运营</h4>
+                <span>内容运营, 品牌营销, 商业化</span>
+              </div>
+              <div class="pos-icon"><i class="fa-solid fa-clapperboard"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="life">
+      <div class="container life-grid">
+        <div class="life-imgs" data-aos="fade-right">
+          <div class="life-img-item"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80" alt="Office" /></div>
+          <div class="life-img-item"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=400&q=80" alt="Team" /></div>
+          <div class="life-img-item"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=400&q=80" alt="Meeting" /></div>
+          <div class="life-img-item"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" alt="Fun" /></div>
+        </div>
+        <div class="life-content" data-aos="fade-left">
+          <span class="hero-tag" style="background: rgba(99, 102, 241, 0.1); color: var(--secondary);">Life At Funshion</span>
+          <h2>在风行，<br />开启多彩职场生活</h2>
+          <p>我们提倡简单、透明、务实的文化。在这里，你的每一份努力都会被看见，每一份创意都会被尊重。</p>
+          <div class="life-list">
+            <div class="life-item">
+              <div class="life-item-icon"><i class="fa-solid fa-mug-hot"></i></div>
+              <div class="life-item-info">
+                <h5>极简人际关系</h5>
+                <p>平等沟通，没有繁文缛节，只为解决问题。</p>
+              </div>
+            </div>
+            <div class="life-item">
+              <div class="life-item-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="life-item-info">
+                <h5>持续成长计划</h5>
+                <p>大咖分享、技术沙龙，助你不断突破自我。</p>
+              </div>
+            </div>
+            <div class="life-item">
+              <div class="life-item-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+              <div class="life-item-info">
+                <h5>全方位福利关怀</h5>
+                <p>弹性工时、六险一金、带薪休假、年度体检。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta" id="contact">
+      <div class="container">
+        <div class="cta-box" data-aos="zoom-in">
+          <h2>准备好加入我们了吗？</h2>
+          <p>如果你也热爱技术、热爱内容，渴望通过自己的力量改变世界，那就快来投递你的简历吧！</p>
+          <div class="cta-btns">
+            <a href="mailto:hr@funshion.com" class="btn btn-primary">立即投递 <i class="fa-solid fa-envelope"></i></a>
+            <a href="#" class="btn btn-outline">关注公众号</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="风行LOGO.png" alt="风行" class="logo" />
+          <p>北京风行在线技术有限公司，致力于成为最懂内容、最懂用户的 AI 科技公司。</p>
+        </div>
+        <div class="footer-col">
+          <h4>加入我们</h4>
+          <ul class="footer-links">
+            <li><a href="#">校园招聘</a></li>
+            <li><a href="#">社会招聘</a></li>
+            <li><a href="#">实习生计划</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>关注我们</h4>
+          <ul class="footer-links">
+            <li><a href="#">官方微信</a></li>
+            <li><a href="#">官方微博</a></li>
+            <li><a href="#">知乎专栏</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>快速链接</h4>
+          <ul class="footer-links">
+            <li><a href="首页.html">首页</a></li>
+            <li><a href="关于风行.html">关于风行</a></li>
+            <li><a href="产品中心.html">产品中心</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 风行在线. All rights reserved.</p>
+        <div style="display: flex; gap: 24px;">
+          <a href="隐私政策.html">隐私政策</a>
+          <a href="用户协议.html">用户协议</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>

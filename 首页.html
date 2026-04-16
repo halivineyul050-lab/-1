@@ -1,0 +1,3485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>风行 AI 文娱生态平台</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- AOS 滚动入场样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, 0.08);
+      --soft-line: rgba(255,255,255,0.8);
+      --orange: #f97316;
+      --orange-2: #fb923c;
+      --orange-soft: #fff7ed;
+      --dark: #0f172a;
+      --dark-2: #111827;
+      --shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+      --radius-xl: 16px;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --max: 1240px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    ::selection { background: rgba(249, 115, 22, 0.2); color: var(--orange); }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    body {
+      margin: 0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg,#fbfcfe 0%,#f5f7fb 28%,#f8fafc 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; position: relative; z-index: 1; }
+    .section { position: relative; padding: 80px 0; }
+    .section::before {
+      content: "";
+      position: absolute; inset: 0 auto auto 0;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(251,146,60,.14), transparent 70%);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+    .section-head { max-width: 1000px; margin: 0 auto; text-align: center; }
+    .section-title { margin: 12px 0 0; font-size: clamp(30px, 4vw, 54px); line-height: 1.2; letter-spacing: -0.03em; white-space: nowrap; }
+    .section-desc { margin: 20px 0 0; color: var(--muted); font-size: 16px; line-height: 1.9; }
+
+    /* ===== 视差滚动基础样式 ===== */
+    .parallax-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .parallax-layer {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+    /* 装饰性背景圆斑 */
+    .blob {
+      border-radius: 50%;
+      filter: blur(60px); /* 减小模糊度，让边缘清晰一点点 */
+      opacity: 0.3;       /* 提高不透明度，让效果更明显 */
+    }
+    .blob-orange { background: radial-gradient(circle, var(--orange), transparent); }
+    .blob-blue { background: radial-gradient(circle, #3b82f6, transparent); }
+    .blob-purple { background: radial-gradient(circle, #8b5cf6, transparent); }
+
+    /* Hero 首屏缩放视差 */
+    .hero-bg video {
+      will-change: transform;
+      transform-origin: center center;
+    }
+
+    /* Lenis 平滑滚动基础设置 */
+    html.lenis {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+
+    /* ===== 生态合作伙伴 (Marquee) ===== */
+    .partner-section {
+      padding: 80px 0;
+    }
+    .marquee {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      margin-top: 64px;
+    }
+    .marquee-content {
+      display: flex;
+      animation: marquee 30s linear infinite;
+      gap: 32px; /* 卡片间距 */
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .partner-logo-card {
+      flex-shrink: 0;
+      width: 220px; /* 固定卡片宽度 */
+      height: 110px; /* 增加高度 */
+      background: #fff;
+      border-radius: 12px; /* 锐利化 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 10px 30px rgba(15,23,42,.04);
+      border: 1px solid rgba(15, 23, 42, 0.05);
+    }
+    .partner-logo-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(15,23,42,.08);
+      border-color: rgba(251,146,60,.2);
+    }
+    .partner-logo-img {
+      max-width: 60%;
+      max-height: 40px;
+      filter: grayscale(100%) opacity(0.5);
+      transition: all 0.4s ease;
+    }
+    .partner-logo-card:hover .partner-logo-img {
+      filter: grayscale(0%) opacity(1);
+    }
+    .partner-logo-text {
+      font-size: 18px;
+      font-weight: 800;
+      color: #94a3b8;
+      transition: all 0.4s ease;
+    }
+    .partner-logo-card:hover .partner-logo-text {
+      color: var(--text);
+    }
+    @media (max-width: 820px) {
+      .marquee-content {
+        gap: 20px;
+      }
+      .partner-logo-card {
+        width: 180px;
+        height: 90px;
+      }
+    }
+
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(18px);
+    }
+    /* 修改点 1：调整导航栏内容区宽度并增加内边距 */
+    .nav-inner { width: 100%; padding: 0 32px; margin: 0 auto; box-sizing: border-box; }
+    
+    .nav-row {
+      height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      position: relative;
+    }
+    .nav-left { display: flex; align-items: center; }
+    .logo { height: 32px; width: auto; object-fit: contain; }
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      padding: 8px;
+    }
+    .nav-center {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 28px; align-items: center;
+      flex: 1; justify-content: center;
+    }
+    .nav-btn {
+      position: relative; border: 0; background: transparent; cursor: pointer; color: #475569;
+      font-size: 15px; padding: 6px 0;
+    }
+    .nav-btn.active { color: var(--text); font-weight: 600; }
+    .nav-btn.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -27px;
+      height: 2px; border-radius: 999px; background: var(--orange);
+    }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    /* 修改基础按钮为 8px 微圆角 */
+    .ghost-btn, .primary-btn {
+      background: rgba(255,255,255,.75);
+      color: #334155; padding: 12px 20px; 
+      border-radius: 4px; /* 锐利化 */
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: .25s ease;
+      box-shadow: 0 4px 14px rgba(15,23,42,.03);
+    }
+    .round-btn {
+      background: transparent;
+      color: var(--text); padding: 10px 24px; 
+      border-radius: 4px; /* 锐利化 */
+      border: 1px solid rgba(15,23,42,0.15);
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all .25s ease;
+      box-shadow: 0 2px 8px rgba(15,23,42,.02);
+    }
+    .round-btn:hover { 
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.2);
+    }
+    .primary-btn {
+      background: var(--orange); color: #fff;
+      box-shadow: 0 10px 28px rgba(249,115,22,.26);
+    }
+    .primary-btn:hover { transform: translateY(-1px); background: #ea580c; }
+    .ghost-btn:hover { background: #fff; }
+
+    .mega-wrap { 
+      /* padding-bottom: 16px; */
+      position: absolute; 
+      top: 80px;          /* 紧贴顶部导航条下方 */
+      left: 0;
+      right: 0;
+      padding-top: 12px; 
+    }
+    .mega-menu {
+      display: none;
+      overflow: hidden;
+      border-radius: 12px; /* 锐利化 */
+      background: rgba(255,255,255,.9); /* 半透明白底 */
+      backdrop-filter: blur(24px); /* 菜单自身的毛玻璃 */
+      box-shadow: 0 24px 80px rgba(15,23,42,.08); /* 悬浮阴影 */
+      max-width: var(--max); 
+      margin: 0 auto;
+      width: 100%;
+    }
+    .mega-menu.open { display: block; }
+    .mega-grid { display: grid; grid-template-columns: 260px minmax(0,1fr); }
+    .mega-side {
+      padding: 28px 24px; 
+      background: linear-gradient(180deg,#fff8f2 0%,#ffffff 100%);
+    }
+    .mega-side .tag { 
+      color: var(--orange); 
+      font-size: 10px; /* 缩小 1px，更精致 */
+      text-transform: uppercase; 
+      letter-spacing: 0.3em; /* 增加间距，更有呼吸感 */
+      font-weight: 700; 
+      opacity: 0.85; /* 稍微透明，不抢主标题戏份 */
+    }
+    .mega-side h3 { margin: 14px 0 0; font-size: 32px; letter-spacing: -0.03em; font-weight: 800; color: #0f172a; }
+    .mega-side p { margin: 16px 0 0; color: var(--muted); line-height: 1.9; font-size: 14px; }
+    .mega-side .cta {
+      display: none; /* 直接隐藏下拉菜单左侧的按钮 */
+    }
+    .mega-body { padding: 16px 24px; }
+    .menu-columns { display: grid; gap: 16px; }
+    .menu-columns.cols-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .menu-columns.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .menu-columns.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .menu-columns.cols-1 { grid-template-columns: repeat(1, minmax(0,1fr)); }
+    .menu-card {
+      border-radius: 12px; 
+      padding: 14px 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .menu-card-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #0f172a; }
+    .menu-card-list { display: grid; gap: 2px; }
+
+    /* --- 上半部分（核心业务）：强调暖色系与发光阴影 --- */
+    .menu-columns .menu-card {
+      background: linear-gradient(180deg, #fffcf8 0%, #ffffff 100%); /* 极浅的暖橙渐变底色 */
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.04); /* 稍微减弱阴影 */
+      border: 1px solid rgba(249, 115, 22, 0.05);
+    }
+    .menu-columns .menu-card:hover {
+      border-color: rgba(251, 146, 60, 0.3);
+      box-shadow: 0 14px 35px rgba(249, 115, 22, 0.06);
+      transform: translateY(-3px);
+    }
+
+    /* --- 下半部分（承接模块）：统一为暖色系，保持风格连贯 --- */
+    .menu-large-block {
+      margin-top: 16px; 
+      padding: 20px 24px; 
+      background: linear-gradient(180deg, #fffcf8 0%, #fef9f3 100%); /* 统一为暖色调背景 */
+      border-radius: 24px;
+      border: 1px solid rgba(249, 115, 22, 0.08);
+      box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.4);
+    }
+    .menu-large-title { 
+      margin-bottom: 12px; font-weight: 800; font-size: 13px; 
+      color: var(--orange); /* 标题也统一使用品牌色，增加识别度 */
+      padding-left: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .menu-large-block .menu-card {
+      background: #ffffff;
+      border-radius: 16px; 
+      padding: 14px 16px;
+      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.02);
+      border: 1px solid rgba(249, 115, 22, 0.04);
+    }
+    .menu-large-block .menu-card:hover {
+      box-shadow: 0 10px 28px rgba(249, 115, 22, 0.05); 
+      transform: translateY(-2px);
+      border-color: rgba(249, 115, 22, 0.15);
+    }
+    /* 统一对齐方式 */
+    .menu-large-block .menu-card-title {
+      padding: 0 12px;
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+/* 下半部分列表项单独的悬浮反馈（微调为极浅的透明灰，融合得更好） */
+    .menu-large-block .menu-item:hover {
+      background: rgba(15, 23, 42, 0.02);
+      color: #0f172a; /* 悬浮时文字稍微恢复一点深度，保证可读性 */ 
+    }
+    /* 内部列表项交互效果保持不变 */
+    .menu-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; border-radius: 12px; color: #475569; font-size: 14px;
+      transition: .25s ease;
+    }
+    .menu-item:hover { background: rgba(249, 115, 22, 0.05); color: var(--orange); }
+
+    main { padding-top: 0px; }
+    .hero {
+      position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; background: linear-gradient(135deg,#1e293b 0%,#0f172a 100%);
+    }
+    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-mask { position: absolute; inset: 0; background: rgba(0,0,0,.42); }
+    .hero-content { position: relative; z-index: 2; text-align: center; color: #fff; }
+    .hero-title {
+      margin: 0 0 32px; font-size: clamp(42px, 7vw, 100px); line-height: 1.1;
+      font-weight: 900; letter-spacing: -0.02em;
+      display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0.2em;
+    }
+    
+    .hero-title .line-1 { 
+      color: rgba(255,255,255,0.9); /* 实心白色文字 */
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0; /* 初始透明 */
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+      animation: heroTitleReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+    }
+
+    .hero-title .title-dot {
+      color: rgba(255,255,255,0.8);
+      opacity: 0;
+      animation: heroTitleReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
+    }
+
+    .hero-title .line-2 { 
+      background: linear-gradient(to right, #ffffff, #f97316, #fbbf24, #ffffff);
+      background-size: 200% auto;
+      -webkit-background-clip: text; 
+      background-clip: text; 
+      color: transparent;
+      position: relative;
+      /* 初始状态设为透明，避免闪烁 */
+      opacity: 0;
+      animation: heroTitleReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s forwards, shine 4s linear infinite 1.3s;
+      filter: drop-shadow(0 10px 30px rgba(249, 115, 22, 0.3));
+    }
+
+
+
+    @keyframes titleTracking {
+      0% { letter-spacing: -0.5em; opacity: 0; }
+      100% { letter-spacing: 0.15em; opacity: 0.9; }
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes heroTitleReveal {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub { 
+      max-width: 800px; margin: 0 auto; font-size: 18px; 
+      color: rgba(255,255,255,0.6); 
+      letter-spacing: 0.4em; /* 极宽字间距，营造呼吸感 */
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 0.8s;
+      position: relative;
+      padding-top: 20px;
+    }
+    
+    /* 副标题上方的精致装饰线 */
+    .hero-sub::before {
+      content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 1px; background: rgba(255,255,255,0.3);
+    }
+
+    .card {
+      background: rgba(255,255,255,.72);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    .card-soft {
+      background: linear-gradient(180deg,#fff8f2 0%,#ffffff 100%);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+      overflow: hidden;
+    }
+    .card-soft:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(249,115,22,0.08);
+    }
+    .card-dark {
+      background: linear-gradient(135deg,#0f172a 0%,#111827 100%);
+      border-radius: 32px; color: #fff;
+      box-shadow: 0 24px 70px rgba(15,23,42,.18);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+    .card-dark:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(15,23,42,.4);
+    }
+
+    /* ===== 全新动态非对称布局 (Dynamic Asymmetric Product Ecosystem) ===== */
+    .showcase-container {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      perspective: 1000px;
+      position: relative;
+    }
+    .showcase-container::before {
+      content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 120%; height: 120%;
+      background: radial-gradient(circle, rgba(249,115,22,0.03), transparent 70%);
+      z-index: -1;
+    }
+    
+    .eco-pillar {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr; /* 非对称比例 */
+      gap: 32px;
+      align-items: stretch;
+    }
+    
+    /* 核心卡片基类 */
+    .premium-card {
+      position: relative;
+      border-radius: 42px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.03);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .premium-card:hover {
+      transform: translateY(-10px) rotateX(1deg);
+      box-shadow: 0 40px 100px rgba(15, 23, 42, 0.08);
+      border-color: rgba(249, 115, 22, 0.15);
+    }
+
+    /* 橙星梦工厂：沉浸式电影感 */
+    .card-dream {
+      grid-column: span 1;
+      display: flex;
+      background: #0f172a; /* 深色背景 */
+      color: #fff;
+    }
+    
+    .dream-video-area {
+      flex: 1.1;
+      position: relative;
+      overflow: hidden;
+    }
+    .dream-video-area::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 70%, #0f172a 100%);
+    }
+    .dream-video-area video {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.85;
+    }
+    
+    .dream-text-area {
+      flex: 0.9;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 2;
+    }
+    
+    .dream-text-area .tag {
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      width: fit-content;
+      margin-bottom: 24px;
+    }
+    
+    .dream-text-area h3 {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      letter-spacing: -0.03em;
+    }
+    
+    .dream-text-area p {
+      font-size: 16px;
+      color: #94a3b8;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    
+    /* 橙星推：增长仪表盘感 */
+    .card-push {
+      background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .push-header {
+      margin-bottom: 32px;
+    }
+    .push-header .icon {
+      width: 48px; height: 48px; background: #e11d48; color: #fff;
+      border-radius: 14px; display: grid; place-items: center; font-size: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px rgba(225, 29, 72, 0.2);
+    }
+    .push-header h3 { font-size: 32px; font-weight: 800; color: #0f172a; margin: 0; }
+    
+    .push-visual {
+      height: 180px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      border: 1px solid rgba(15, 23, 42, 0.05);
+      margin-bottom: 32px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .push-chart-line {
+      width: 80%; height: 60%;
+      stroke: #e11d48;
+      stroke-width: 3;
+      fill: none;
+      filter: drop-shadow(0 4px 10px rgba(225, 29, 72, 0.2));
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: chartDraw 3s ease-out forwards infinite;
+    }
+    
+    @keyframes chartDraw {
+      0% { stroke-dashoffset: 300; opacity: 0; }
+      20% { opacity: 1; }
+      80% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+
+    /* 次要产品矩阵：精致玻璃拟态 */
+    .eco-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    
+    .matrix-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 36px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+    }
+    
+    .matrix-card:hover {
+      background: #ffffff;
+      transform: scale(1.05);
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.06);
+    }
+    
+    .matrix-icon {
+      width: 84px; height: 84px;
+      border-radius: 24px;
+      display: grid; place-items: center;
+      font-size: 40px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .matrix-title { font-size: 24px; font-weight: 800; color: #0f172a; margin: 0 0 12px; }
+    .matrix-desc { font-size: 14px; color: #64748b; line-height: 1.6; margin: 0; font-weight: 500; }
+
+    /* 按钮样式强化 */
+    .action-btn {
+      padding: 14px 28px;
+      border-radius: 4px; /* 锐利化 */
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-glass { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .btn-glass:hover { background: #fff; color: #0f172a; }
+    
+    .btn-solid { background: #e11d48; color: #fff; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.2); }
+    .btn-solid:hover { background: #be123c; transform: translateY(-2px); }
+
+    /* 导航栏联系方式：简约大气统一风格 */
+    .nav-phone-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: #475569;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    .nav-phone-link:hover {
+      background: rgba(15, 23, 42, 0.03);
+      color: #0f172a;
+    }
+
+    @media (max-width: 1100px) {
+      .eco-pillar { grid-template-columns: 1fr; }
+      .card-dream { flex-direction: column; }
+      .dream-video-area { height: 300px; }
+    }
+    @media (max-width: 820px) {
+      .eco-matrix { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      .dual-core-row { grid-template-columns: 1fr; }
+      .app-icon-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 1100px) {
+      .flagship-card { grid-template-columns: 1fr; }
+      .flagship-video-area { height: 360px; }
+      .product-matrix { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .product-matrix { grid-template-columns: 1fr; }
+      .flagship-info { padding: 40px; }
+    }
+     .real-preview-box {
+      border-radius: 28px; 
+      background: #f1f5f9; 
+      border: 1px solid rgba(15,23,42,.05);
+      display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 14px; font-weight: 600;
+      min-height: 280px; overflow: hidden;
+      position: relative;
+    }
+    /* 未来你填入真实图片后会用到这个样式 */
+    .real-preview-box img, .real-preview-box video { 
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; 
+    }
+    .line-sm, .line-md, .line-lg {
+      border-radius: 999px; background: #e2e8f0;
+    }
+    .line-sm { height: 16px; }
+    .line-md { height: 18px; }
+    .line-lg { height: 24px; }
+    .placeholder-grid-3 { margin-top: 16px; display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .box-mini { height: 82px; border-radius: 20px; background: #f1f5f9; border: 1px solid rgba(15,23,42,.07); }
+    .box-mini.orange { background: #fed7aa; border-color: rgba(251,146,60,.3); }
+    .box-panel { margin-top: 16px; height: 120px; border-radius: 24px; background: #f8fafc; border: 1px solid rgba(15,23,42,.05); }
+    .small-stack { display: grid; gap: 16px; }
+    .small-card { 
+      padding: 18px; border-radius: 24px; 
+      border: 1px solid rgba(15,23,42,.04); 
+      background: linear-gradient(180deg,#fff 0%,#f8fafc 100%); 
+      box-shadow: 0 8px 20px rgba(15,23,42,.03); /* 增加常态微阴影 */
+      transition: all 0.3s ease;
+    }
+    .small-card.orange { 
+      background: linear-gradient(180deg,#fffcf8 0%,#fff 100%); 
+      border-color: rgba(251,146,60,.15);
+    }
+    .small-card:hover {
+      transform: translateX(6px); /* 鼠标移入时产生微弱的右移指引感 */
+      box-shadow: 0 12px 24px rgba(15,23,42,.06);
+    }
+    .small-card .hint { color: #94a3b8; font-size: 12px; }
+    .small-card .strong { margin-top: 10px; font-size: 20px; font-weight: 700; }
+    .scene-layout { margin-top: 36px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; }
+    .device-stage { padding: 0; position: relative; overflow: hidden; height: 460px; }
+    .stage-tag {
+      position: absolute; left: 28px; top: 28px; padding: 10px 16px; border-radius: 999px;
+      background: rgba(255,255,255,.85); border: 1px solid rgba(15,23,42,.05); color: #64748b; font-size: 12px;
+    }
+    .device-stack { position: relative; height: 100%; min-height: 520px; display: flex; align-items: center; justify-content: center; }
+    .phone-left, .tv-center, .phone-right {
+      position: absolute; border-radius: 32px; background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 18px 50px rgba(15,23,42,.1); backdrop-filter: blur(20px);
+      padding: 18px;
+    }
+    .phone-left { left: 0; top: 84px; width: 210px; height: 300px; }
+    .tv-center { z-index: 2; width: 560px; height: 330px; }
+    .phone-right { right: 16px; bottom: 0; z-index: 3; width: 140px; height: 250px; }
+    .device-art {
+      margin-top: 16px; border-radius: 24px; background: linear-gradient(180deg,#fff8f2 0%,#f8fafc 100%);
+    }
+    .phone-left .device-art { height: 220px; }
+    .phone-right .device-art { height: 150px; background: #fed7aa; border: 1px solid rgba(251,146,60,.3); }
+    .tv-grid { margin-top: 18px; height: 252px; display: grid; grid-template-columns: 1fr; }
+    .tv-main { border-radius: 24px; background: #000; position: relative; overflow: hidden; }
+    .video-player {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    
+    .video-player.small {
+      border-radius: 16px;
+    }
+    
+    .video-player.full {
+      border-radius: 0;
+      height: 100%;
+      min-height: 500px;
+      transform: translateY(60px);
+    }
+    
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-radius: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .video-placeholder:hover {
+      background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+      transform: scale(1.02);
+    }
+    .play-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(249, 115, 22, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
+    }
+    
+    .play-button.small {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+    }
+    
+    .play-button.large {
+      width: 80px;
+      height: 80px;
+      font-size: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 32px rgba(249, 115, 22, 0.4);
+    }
+    
+    .play-button:hover {
+      background: rgba(249, 115, 22, 1);
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(249, 115, 22, 0.4);
+    }
+    
+    .play-button.small:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    }
+    
+    .video-label {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .video-label.small {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .video-label.large {
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .tv-side { display: grid; gap: 14px; }
+    .tv-side > div { border-radius: 22px; background: #fff; border: 1px solid rgba(15,23,42,.06); }
+    .tv-side > div:nth-child(2) { background: #fed7aa; border-color: rgba(251,146,60,.3); }
+
+    .scene-grid { display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .scene-card { padding: 24px; position: relative; overflow: hidden; transition: .3s ease; }
+    .scene-card:hover { transform: translateY(-6px); }
+    .scene-top { display: flex; flex-direction: column; gap: 8px; }
+    .scene-header { display: flex; align-items: center; gap: 12px; }
+    .scene-logo { font-size: 36px; }
+    .scene-title { font-size: 24px; font-weight: 700; }
+    .scene-description { font-size: 14px; color: #64748b; line-height: 1.5; }
+    .scene-art { margin-top: 22px; aspect-ratio: 16/9; border-radius: 22px; background: linear-gradient(180deg,#fff8f2 0%,#f8fafc 100%); border: 1px solid rgba(15,23,42,.05); }
+
+    .assets-wrap { margin-top: 32px; overflow: hidden; }
+    .asset-grid { display: grid; gap: 16px; grid-template-columns: repeat(4, minmax(0,1fr)); padding: 24px 24px 40px 24px; align-items: start; }
+    .asset-card { 
+      padding: 16px; position: relative; overflow: hidden; 
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+      border-radius: 28px;
+    }
+    .asset-grid > div:nth-child(even) { margin-top: 40px; }
+    .asset-card:hover {
+      background: #ffffff;
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+      transform: translateY(-10px);
+    }
+    .asset-grid > div:nth-child(even) > .asset-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .asset-poster { 
+      aspect-ratio: 16/9; border-radius: 22px; 
+      background: linear-gradient(180deg,#fff8f2 0%,#f8fafc 100%); 
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .asset-card:hover .asset-poster {
+      transform: scale(1.03);
+    }
+    .asset-name { transition: color 0.3s ease; }
+    .asset-card:hover .asset-name { color: var(--orange); }
+
+    .asset-bottom { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .asset-name { font-size: 20px; font-weight: 700; margin-top: 4px; }
+    .asset-tag { border-radius: 999px; background: #fff7ed; color: #ea580c; font-size: 12px; padding: 6px 12px; border: 1px solid rgba(251,146,60,.18); }
+    .stat-bar { padding: 20px 24px; background: linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); /* 浅色背景渐变 */      color: #fff; border-top: 1px solid rgba(255,255,255,.08); }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+    .stat-card { 
+      padding: 22px; border-radius: 22px; background: #f8fafc; border: 1px solid rgba(255,255,255,.1); 
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(249,115,22,0.1);
+    }
+    .stat-value { font-size: clamp(32px, 4vw, 46px); font-weight: 800; letter-spacing: -0.04em; color:var(--orange) }
+    .stat-label { margin-top: 12px; font-size: 14px; color: var(--muted);}
+
+    .service-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
+    .service-card { 
+      padding: 28px; position: relative; overflow: hidden;
+      border-radius: 32px;
+      background: linear-gradient(180deg, #fffcf8 0%, #ffffff 100%); /* 极浅的暖白渐变 */
+      box-shadow: 0 16px 50px rgba(249,115,22,.04); /* 非常柔和的暖色阴影 */
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(249,115,22,.12);
+    }
+    .service-header { display: flex; align-items: center; gap: 16px; }
+    .service-icon {
+      width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center;
+      background: #ffffff; border: 1px solid rgba(251,146,60,.2); font-size: 20px;
+      box-shadow: 0 8px 20px rgba(249,115,22,.06);
+    }
+    .service-tag { 
+      border-radius: 999px; padding: 6px 12px; font-size: 12px; 
+      color: #ea580c; background: #fff7ed; border: 1px solid rgba(251,146,60,.15); /* 标签改为品牌橙色 */
+    }
+    .service-title { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); }
+    .service-desc { margin-top: 14px; line-height: 1.9; color: var(--muted); font-size: 15px; }
+    .service-image { margin-top: 24px; }
+    .service-box { height: 120px; border-radius: 20px; background: linear-gradient(135deg, #fff7ed 0%, #fffcf8 100%); border: 1px solid rgba(251,146,60,.15); }
+
+    .news-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+    .news-grid { margin-top: 40px; display: grid; grid-template-columns: 1.08fr .92fr; gap: 28px; }
+    .news-feature { overflow: hidden; }
+    .news-media {
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(249,115,22,.22), transparent 18%),
+        linear-gradient(180deg,#fff8f2 0%,#f8fafc 100%);
+    }
+    .play-btn {
+      width: 64px; height: 64px; border-radius: 999px;
+      display: grid; place-items: center; background: rgba(255,255,255,.9); color: var(--orange);
+      box-shadow: 0 12px 24px rgba(15,23,42,.1); border: 1px solid rgba(251,146,60,.14);
+      font-size: 24px;
+    }
+    .news-body { padding: 28px 30px; }
+    .news-meta { color: #ea580c; font-size: 12px; }
+    .news-title { margin-top: 12px; font-size: clamp(28px, 4vw, 38px); line-height: 1.2; font-weight: 800; letter-spacing: -0.03em; }
+    .news-desc { margin-top: 18px; color: var(--muted); line-height: 1.9; font-size: 16px; }
+    .news-list { display: grid; gap: 16px; }
+    .news-item { padding: 22px; transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease; }
+    .news-item:hover { transform: translateX(6px); }
+    .news-item-meta { display: flex; justify-content: space-between; gap: 16px; color: #94a3b8; font-size: 12px; }
+    .news-item-title { margin-top: 12px; display: flex; justify-content: space-between; gap: 18px; align-items: center; font-size: 22px; line-height: 1.6; }
+    /* ===== 重新设计的高级页脚 (Refined Modern Footer) ===== */
+    footer {
+      padding: 100px 0 40px; 
+      background: #0f172a; /* 稍微提亮一点的深蓝灰，增加科技感 */
+      color: #fff;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    /* 增加顶部微妙的科技光晕 */
+    footer::before {
+      content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent);
+    }
+    
+    .footer-grid { 
+      display: grid; 
+      grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; 
+      gap: 64px; /* 增加列间距，更透气 */
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-logo { height: 32px; object-fit: contain; margin-bottom: 20px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.1)); }
+    .brand-slogan {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #fff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .footer-text { color: #94a3b8; font-size: 14px; line-height: 1.8; margin-bottom: 32px; max-width: 280px; }
+    
+    .footer-social { display: flex; gap: 12px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 50%; /* 改为正圆形，更现代 */
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      display: grid; place-items: center; color: #cbd5e1;
+      transition: all 0.3s ease; cursor: pointer;
+    }
+    .social-btn:hover { background: var(--orange); border-color: var(--orange); color: #fff; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(249,115,22,0.3); }
+
+    .footer-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 28px; position: relative; letter-spacing: 0.5px; }
+    /* 移除之前的下划线，改用更干净的排版 */
+    
+    .footer-links { display: grid; gap: 16px; color: #94a3b8; font-size: 14px; }
+    .footer-links div { cursor: pointer; transition: color .2s ease; display: inline-block; width: fit-content; }
+    .footer-links div:hover { color: var(--orange); } /* 悬停变为品牌色 */
+    
+    /* 重新设计的联系我们列表 */
+    .contact-list { display: grid; gap: 20px; }
+    .contact-item { display: flex; gap: 12px; align-items: flex-start; }
+    .contact-icon-box {
+      margin-top: 2px;
+      color: #64748b; font-size: 18px; flex-shrink: 0;
+    }
+    .contact-info-text { font-size: 14px; color: #94a3b8; line-height: 1.6; white-space: nowrap; }
+    .contact-info-text b { color: #cbd5e1; font-size: 13px; font-weight: 500; }
+
+    .footer-bottom {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #64748b;
+      font-size: 13px;
+    }
+    .footer-bottom-links { display: flex; gap: 32px; }
+    .footer-bottom-links a { color: #64748b; transition: color .2s ease; }
+    .footer-bottom-links a:hover { color: #cbd5e1; }
+
+    .fade-in { animation: fadeIn .32s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== 全新产品矩阵样式 (对比用) ===== */
+    .product-showcase { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+    
+    .product-hero-card {
+      display: grid; grid-template-columns: 1.25fr 0.75fr; 
+      background: #ffffff; border-radius: 32px; overflow: hidden;
+      box-shadow: 0 16px 50px rgba(15,23,42,.04);
+      min-height: 400px;
+    }
+    .product-hero-media { position: relative; background: #f8fafc; }
+    .product-hero-info { padding: 48px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .product-hero-brand { display: flex; align-items: center; gap: 12px; }
+    .product-hero-icon { 
+      width: 36px; height: 36px; border-radius: 10px; 
+      background: linear-gradient(135deg, #f97316, #fb923c); color: #fff; 
+      display: grid; place-items: center; font-weight: 800; font-size: 18px; 
+    }
+    .product-hero-title { font-size: 32px; font-weight: 800; color: var(--text); margin: 0; letter-spacing: -0.02em;}
+    .product-tag { font-size: 11px; color: #ea580c; background: #fff7ed; border: 1px solid rgba(251,146,60,.2); padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+    .product-hero-desc { margin-top: 16px; font-size: 16px; color: var(--muted); font-weight: 500; }
+    
+    .product-hero-features { list-style: none; padding: 0; margin: 36px 0 0 0; display: grid; gap: 16px; }
+    .product-hero-features li { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 700; color: var(--text); }
+    .product-hero-features li::before { content: ""; width: 4px; height: 16px; background: var(--orange); border-radius: 4px; }
+    .hero-btn { margin-top: 40px; align-self: flex-start; padding: 14px 36px; font-size: 16px; border-radius: 4px; } /* 锐利化 */
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .product-mini-card {
+      background: #ffffff; border-radius: 28px; padding: 36px 24px; text-align: center;
+      box-shadow: 0 12px 30px rgba(15,23,42,.03); border: 1px solid rgba(15,23,42,.04);
+      transition: all .3s ease; cursor: pointer;
+    }
+    .product-mini-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(15,23,42,.06); border-color: rgba(251,146,60,.15); }
+    .mini-card-icon {
+      width: 64px; height: 64px; border-radius: 20px; margin: 0 auto 20px;
+      display: grid; place-items: center; font-size: 28px; font-weight: 800;
+    }
+    .mini-card-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .mini-card-desc { font-size: 13px; color: #94a3b8; line-height: 1.7; }
+
+    /* ===== 小程序矩阵专属样式 ===== */
+    .mini-program-layout {
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 60px; align-items: center;
+    }
+    
+    /* 左侧成就展示区 */
+    .mp-content {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 20px;
+    }
+    
+    .achievement-card {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 36px 28px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .achievement-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.05);
+      border-color: rgba(249, 115, 22, 0.1);
+    }
+    
+    .achievement-card .data-value {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1.1;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .achievement-card .data-label {
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 600;
+    }
+    
+    .achievement-visual {
+      margin-top: 20px;
+      height: 100px;
+      border-radius: 16px;
+      background: #f8fafc;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* 成就卡片图片占位符 */
+    .achievement-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    
+    /* 模拟榜单图片展示 */
+    .rank-badge {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #fcd34d, #f59e0b);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: #fff; font-size: 24px; font-weight: 900;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+    }
+    
+    /* 模拟用户增长曲线 */
+    .user-growth-mini {
+      width: 100%; height: 100%;
+      stroke: var(--orange); stroke-width: 2; fill: none;
+      opacity: 0.6;
+    }
+
+    /* 原有的 mp-features 相关样式保留或微调 */
+    .mp-features { display: flex; flex-direction: column; gap: 20px; }
+    .mp-feature-item { display: flex; gap: 16px; align-items: center; padding: 16px; border-radius: 18px; background: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.02); }
+    .mp-icon { 
+      width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
+      background: #fff; border: 1px solid rgba(15, 23, 42, 0.05);
+      display: grid; place-items: center; font-size: 18px; 
+    }
+    .mp-text h4 { margin: 0; font-size: 15px; font-weight: 700; color: var(--text); }
+    .mp-text p { margin: 2px 0 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* 右侧视觉区 */
+    .mp-visual { position: relative; height: 600px; display: flex; justify-content: center; align-items: center; }
+    
+    /* 拟真手机边框 */
+    /* ===== 拟真手机三机阵列边框 ===== */
+    .mp-phone-frame {
+      width: 270px; /* 稍微缩窄一点点，完美容纳三台 */
+      height: 540px;
+      border-radius: 40px; 
+      background: #ffffff;
+      border: 8px solid #ffffff; 
+      box-shadow: 0 24px 60px rgba(15,23,42,.1), inset 0 0 0 1px rgba(15,23,42,.05);
+      position: absolute; /* 绝对定位，实现三台叠放 */
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* 丝滑Q弹的过渡动画 */
+    }
+    
+    .mp-phone-notch {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 20px; background: #ffffff; border-radius: 0 0 14px 14px;
+      z-index: 10; border: 1px solid rgba(15,23,42,.05); border-top: none;
+    }
+    
+    /* 手机屏幕内的骨架屏 UI */
+    .mp-phone-screen { background: #f8fafc; height: 100%; width: 100%; padding: 38px 16px 16px; overflow: hidden; }
+    .mp-ui-header { font-size: 13px; font-weight: 800; text-align: center; margin-bottom: 16px; color: #0f172a; }
+    .mp-ui-banner { height: 120px; border-radius: 14px; background: linear-gradient(135deg, #fb923c, #fcd34d); margin-bottom: 16px; box-shadow: 0 8px 20px rgba(249,115,22,.2); }
+    .mp-ui-title { font-size: 13px; font-weight: 700; margin: 14px 0 10px; color: #334155; }
+    .mp-ui-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .mp-ui-grid div { height: 42px; border-radius: 10px; background: #e2e8f0; }
+    .mp-ui-list { display: flex; flex-direction: column; gap: 10px; }
+    .mp-ui-list-item { display: flex; gap: 10px; padding: 10px; background: #ffffff; border-radius: 14px; box-shadow: 0 4px 12px rgba(15,23,42,.03); }
+    .mp-ui-list-item .pic { width: 40px; height: 50px; border-radius: 8px; background: #cbd5e1; }
+    .mp-ui-list-item .lines { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .mp-ui-list-item .l1 { height: 10px; width: 80%; background: #e2e8f0; border-radius: 4px; }
+    .mp-ui-list-item .l2 { height: 8px; width: 50%; background: #f1f5f9; border-radius: 4px; }
+
+    /* ===== 三台手机的空间占位与悬浮交互 ===== */
+    .phone-main {
+      z-index: 3;
+      transform: translateX(0) scale(1);
+      box-shadow: 0 30px 60px rgba(15,23,42,.15);
+    }
+    .phone-left-side {
+      z-index: 1;
+      transform: translateX(-150px) scale(0.85); /* 往左移并缩小 */
+      opacity: 0.85; /* 稍微透明，拉开空间层次 */
+    }
+    .phone-right-side {
+      z-index: 1;
+      transform: translateX(150px) scale(0.85); /* 往右移并缩小 */
+      opacity: 0.85;
+    }
+
+    /* 悬停时的放大交互 - 仅进行缩放，不进行水平位移，且保持在主机层级之下 */
+    .phone-main:hover { transform: translateY(-10px) scale(1.02); }
+    .phone-left-side:hover { transform: translateX(-150px) scale(0.92); z-index: 2; opacity: 1; }
+    .phone-right-side:hover { transform: translateX(150px) scale(0.92); z-index: 2; opacity: 1; }
+
+    /* ===== 悬浮标签特效位置微调 ===== */
+    .mp-float-card {
+      position: absolute; display: flex; align-items: center; gap: 0;
+      padding: 0; background: transparent;
+      border-radius: 50%; box-shadow: none; border: none;
+      font-size: 14px; font-weight: 700; color: #334155; z-index: 5;
+      animation: floatBreath 4s ease-in-out infinite;
+    }
+    .float-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .f-title {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+      line-height: 1;
+    }
+    
+    .f-highlight {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--orange); /* 使用品牌橙色突出数据 */
+      line-height: 1;
+      white-space: nowrap; /* 保证数据不换行 */
+    }
+    
+    .f-highlight small {
+      font-size: 11px;
+      font-weight: 500;
+      color: #94a3b8;
+      margin-left: 2px;
+    }
+    .icon-circle { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: white; font-size: 13px; }
+    
+    .float-wx { top: 90px; left: -40px; animation-delay: 0s; }
+    .float-dy { right: -70px; }
+    .float-ks { left: -40px; }
+
+    @keyframes floatBreath {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+
+    
+
+
+    /* ===== 重新设计：创作者瀑布流 (Creator Waterfall Mosaic) ===== */
+    .creator-nebula-wrap {
+      margin-top: 60px;
+      height: 440px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      background: #f8fafc;
+    }
+
+    /* 遮罩蒙版：让边缘虚化，聚焦中心 */
+    .creator-nebula-wrap::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at center, transparent 20%, #f8fafc 85%);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .mosaic-container {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center; gap: 20px;
+      transform: rotate(-5deg) scale(1.1); /* 倾斜一点更有设计感 */
+    }
+
+    .mosaic-row {
+      display: flex; gap: 20px;
+      width: max-content;
+      animation: mosaic-scroll linear infinite;
+    }
+    @keyframes mosaic-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-50% - 10px)); }
+    }
+
+    .mosaic-item {
+      width: 80px; height: 80px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 4px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      flex-shrink: 0;
+    }
+    .mosaic-item img { width: 100%; height: 100%; border-radius: 13px; object-fit: cover; filter: grayscale(0.2) opacity(0.8); transition: 0.3s; }
+    .mosaic-item:hover img { filter: grayscale(0) opacity(1); transform: scale(1.05); }
+
+    /* 居中数据卡片：极致简洁 */
+    .nebula-core {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 50;
+      width: 320px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+      border: 1px solid #fff;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .nebula-core:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .nebula-core .data-val {
+      font-size: 84px; font-weight: 900; 
+      color: var(--orange);
+      line-height: 1; margin-bottom: 4px;
+      letter-spacing: -3px;
+      transition: color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .nebula-core:hover .data-val {
+      color: #f59e0b;
+    }
+    
+    .nebula-core .data-label {
+      font-size: 15px; color: #64748b; font-weight: 800; letter-spacing: 5px; text-transform: uppercase;
+      transition: color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .nebula-core:hover .data-label {
+      color: #475569;
+    }
+
+    @media (max-width: 820px) {
+      .creator-nebula-wrap { height: 360px; }
+      .nebula-core { width: 240px; padding: 30px; }
+      .nebula-core .data-val { font-size: 56px; }
+      .mosaic-item { width: 60px; height: 60px; }
+    }
+
+    @media (max-width: 1180px) {
+      .menu-toggle { display: block; }
+      .nav-center { 
+        display: none; 
+        width: 100%; 
+        position: static; 
+        transform: none; 
+        flex-direction: column; 
+        gap: 16px; 
+        padding: 24px 0;
+        border-top: 1px solid var(--line);
+        margin-top: 16px;
+      }
+      .nav-center.open { display: flex; }
+      .nav-row { height: auto; padding: 18px 0; align-items: flex-start; flex-direction: column; }
+      .nav-left { width: 100%; justify-content: space-between; }
+      .nav-actions { margin-left: auto; display: none; }
+      .nav-center.open ~ .nav-actions { display: flex; width: 100%; justify-content: center; padding-top: 16px; border-top: 1px solid var(--line); }
+      .mega-wrap { display: none; }
+
+      .mega-grid, .flow-detail, .scene-layout, .news-grid { grid-template-columns: 1fr; }
+      .menu-columns.cols-4, .menu-columns.cols-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .flow-row, .service-grid, .asset-grid, .stat-grid, .footer-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .tv-center { position: relative; width: min(100%, 560px); }
+      .phone-left, .phone-right { transform: scale(.92); }
+      .product-hero-card { grid-template-columns: 1fr; min-height: auto; }
+      .product-hero-media { height: 280px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .mini-program-layout { grid-template-columns: 1fr; gap: 40px; }
+      .mp-visual { height: auto; padding: 40px 0; }
+      .float-wx { left: 0; }
+      .float-dy { right: 0; }
+      .float-ks { left: 10px; }
+    }
+    @media (max-width: 820px) {
+      .section { padding: 40px 0; }
+      .hero { min-height: 80vh; }
+      .container, .nav-inner { width: min(var(--max), calc(100% - 28px)); }
+      main { padding-top: 80px; } /* 恢复默认内边距，因为导航栏在移动端会变高 */
+      .mega-menu { display: none; }
+      .section-title { white-space: normal; }
+      .flow-row, .service-grid, .asset-grid, .stat-grid, .footer-grid, .scene-grid { grid-template-columns: 1fr; }
+      .flow-line { display: none; }
+      .device-stage { min-height: 760px; }
+      .tv-center { width: 100%; max-width: 100%; height: 280px; }
+      .phone-left { top: 0; left: 0; width: 160px; height: 240px; }
+      .phone-right { right: 0; bottom: 20px; width: 120px; height: 220px; }
+      .hero-title { line-height: 1.08; }
+      .asset-card:nth-child(even) { transform: none; }
+      .creator-avatar-item { width: 84px; height: 84px; }
+    }
+
+    /* 头像点击放大效果 */
+    .creator-avatar-item.is-active {
+      transform: scale(1.3); /* 放大比例 */
+      border-color: var(--orange); /* 品牌橙色边框 */
+      box-shadow: 0 16px 40px rgba(249, 115, 22, 0.25); /* 橙色发光阴影 */
+      z-index: 10;
+      position: relative;
+    }
+
+    /* 确保平滑过渡 */
+    .creator-avatar-item {
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                  box-shadow 0.4s ease, 
+                  border-color 0.4s ease;
+    }
+    
+    .hot-tag {
+      background: linear-gradient(90deg, #f97316 0%, #fb923c 100%);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 4px;
+      border-radius: 4px 4px 4px 0;
+      margin-left: 2px;
+      display: inline-block;
+      position: relative;
+      top: -12px; /* 向上推，使其真正成为右上角的上标 */
+      line-height: 1;
+      font-style: italic;
+      transform: scale(0.75); /* 整体等比缩小到 75% */
+      transform-origin: left bottom; /* 以左下角为原点缩小，保持靠左排列 */
+    }
+    
+    .new-tag {
+      background: linear-gradient(90deg, #ef4444 0%, #f87171 100%); 
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 4px;
+      border-radius: 4px 4px 4px 0;
+      margin-left: 2px;
+      display: inline-block;
+      position: relative;
+      top: -12px; 
+      line-height: 1;
+      font-style: italic;
+      transform: scale(0.75); 
+      transform-origin: left bottom; 
+    }
+    
+    /* ===== 生态合作伙伴 ===== */
+    .partner-section {
+      background: transparent;
+    }
+    .partner-section::before {
+      display: none;
+    }
+    .partner-categories {
+      margin-top: 60px;
+    }
+    .partner-tabs {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+    }
+    .partner-tab {
+      padding: 14px 32px;
+      border: 2px solid rgba(249, 115, 22, 0.15);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 999px;
+      color: #475569;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      backdrop-filter: blur(15px);
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-tab::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s;
+    }
+    .partner-tab:hover::before {
+      left: 100%;
+    }
+    .partner-tab:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: rgba(255, 255, 255, 0.98);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.15);
+    }
+    .partner-tab.active {
+      background: linear-gradient(135deg, var(--orange), #fb923c);
+      border-color: var(--orange);
+      color: white;
+      box-shadow: 0 8px 32px rgba(249, 115, 22, 0.3);
+      transform: translateY(-2px);
+    }
+    .partner-content {
+      position: relative;
+      min-height: 200px; /* 固定最小高度，避免页面跳动 */
+    }
+    .partner-category {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      visibility: hidden;
+    }
+    .partner-category.active {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 24px 0;
+      max-width: 100%;
+    }
+    
+    /* 合作伙伴详情内容区域 */
+    .partner-detail {
+      margin-top: 40px;
+      padding: 32px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      border: 1px solid rgba(249, 115, 22, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      visibility: hidden;
+    }
+    
+    .partner-detail.show {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+    
+    .partner-detail-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    
+    .partner-detail-info h3 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    
+    .partner-detail-info p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    
+    .partner-detail-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .partner-detail-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .partner-detail-feature::before {
+      content: "✓";
+      color: var(--orange);
+      font-weight: bold;
+    }
+    
+    .partner-detail-image {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+    }
+    
+    .partner-detail-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .partner-logo-card {
+      width: 180px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      border: 1px solid rgba(249, 115, 22, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    
+    .partner-logo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    .partner-logo-card:hover::before,
+    .partner-logo-card:active::before {
+      left: 100%;
+    }
+    
+    .partner-logo-card:hover,
+    .partner-logo-card:active {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 16px 40px rgba(249, 115, 22, 0.15);
+      border-color: rgba(249, 115, 22, 0.3);
+      z-index: 10;
+    }
+    
+    .partner-logo-img {
+      max-width: 50%;
+      max-height: 35px;
+      filter: grayscale(100%) opacity(0.6);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 8px;
+    }
+    
+    .partner-logo-card:hover .partner-logo-img,
+    .partner-logo-card:active .partner-logo-img {
+      filter: grayscale(0%) opacity(1);
+      transform: scale(1.1);
+    }
+    
+    .partner-logo-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #64748b;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 3;
+      letter-spacing: 0.2px;
+      text-align: center;
+      padding: 0 8px;
+      line-height: 1.3;
+    }
+    
+    .partner-logo-card:hover .partner-logo-text,
+    .partner-logo-card:active .partner-logo-text {
+      color: var(--orange);
+      transform: scale(1.05);
+    }
+    @media (max-width: 1100px) {
+      .partner-grid { height: 400px; }
+      .partner-logo-card { width: 150px; height: 85px; }
+    }
+    @media (max-width: 820px) {
+      .partner-grid { height: 350px; }
+      .partner-logo-card { width: 130px; height: 75px; }
+      .partner-logo-text { font-size: 13px; }
+      .logo-layer { gap: 16px; }
+    }
+  
+    /* Bento Grid for Products */
+    .bento-section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bento-section-title::before {
+      content: "";
+      width: 4px; height: 20px;
+      background: #f97316;
+      border-radius: 2px;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+    .bento-main {
+      grid-column: span 2;
+    }
+    .bento-side-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .bento-sub-grid {
+      grid-column: span 3;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* Small Card Style for Bento */
+    .mini-product-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid rgba(15, 23, 42, 0.05);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .mini-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      border-color: #f97316;
+    }
+    .mini-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      font-size: 20px;
+      background: #f8fafc;
+    }
+    .mini-info h4 { font-size: 16px; font-weight: 800; color: #0f172a; margin: 0 0 4px; }
+    .mini-info p { font-size: 13px; color: #64748b; margin: 0; line-height: 1.4; }
+
+    /* 5-Item Bento Grid */
+    .eco-bento-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(320px, auto);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    
+    .bento-item {
+      background: #ffffff;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.05);
+      transition: transform 0.5s, box-shadow 0.5s, border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .bento-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+      border-color: #f97316;
+    }
+    
+    /* 大卡片：梦工厂 */
+    .bento-item.featured {
+      grid-column: span 2;
+      flex-direction: row;
+      background: #0f172a;
+      color: #fff;
+    }
+    
+    .featured .bento-visual { width: 55%; position: relative; overflow: hidden; }
+    .featured .bento-visual video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+    .featured .bento-content { width: 45%; padding: 48px; display: flex; flex-direction: column; justify-content: center; }
+    .featured h3 { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+    .featured p { font-size: 15px; color: #94a3b8; line-height: 1.6; margin-bottom: 24px; }
+    
+    /* 普通卡片 */
+    .bento-item.standard { padding: 32px; justify-content: space-between; }
+    .standard .bento-icon { 
+      width: 56px; height: 56px; border-radius: 16px; 
+      display: grid; place-items: center; font-size: 24px; margin-bottom: 24px;
+      background: #f8fafc;
+    }
+    .standard h4 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
+    .standard p { font-size: 14px; color: #64748b; line-height: 1.5; margin: 0; }
+    
+    /* 变现卡片（橙星推）特别样式 */
+    .bento-item.highlight {
+      background: linear-gradient(135deg, #fff 0%, #fff8f2 100%);
+      border: 1px solid rgba(249, 115, 22, 0.1);
+    }
+    .highlight .bento-icon { background: #fff7ed; color: #f97316; }
+
+    @media (max-width: 1100px) {
+      .eco-bento-container { grid-template-columns: repeat(2, 1fr); }
+      .bento-item.featured { grid-column: span 2; }
+    }
+    @media (max-width: 768px) {
+      .eco-bento-container { grid-template-columns: 1fr; }
+      .bento-item.featured { grid-column: span 1; flex-direction: column; }
+      .featured .bento-visual, .featured .bento-content { width: 100%; }
+      .featured .bento-visual { height: 240px; }
+    }
+
+
+    /* Dual Core + Supporting Layout */
+    .eco-dual-core {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+      margin-bottom: 32px;
+    }
+    
+    .eco-supporting {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    
+    /* 旗舰卡片基础样式 */
+    .flagship-box {
+      border-radius: 36px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s;
+    }
+    .flagship-box:hover {
+      transform: translateY(-8px);
+    }
+    .flagship-box .f-visual { width: 100%; height: 280px; border-bottom: 1px solid rgba(15,23,42,0.03); }
+    
+    /* 旗舰 1：橙星梦工厂 */
+    .flagship-dream {
+      background: linear-gradient(135deg, #ffffff 0%, #fff8f2 100%);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+      box-shadow: 0 20px 40px rgba(249, 115, 22, 0.05);
+    }
+    .flagship-dream .f-visual {
+      position: relative;
+      overflow: hidden;
+    }
+    .flagship-dream video { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+    .flagship-dream:hover { box-shadow: 0 30px 60px rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.3); }
+    
+    /* 旗舰 2：橙星推 */
+    .flagship-push {
+      background: linear-gradient(135deg, #ffffff 0%, #fff8f2 100%);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+      box-shadow: 0 20px 40px rgba(249, 115, 22, 0.05);
+    }
+    .flagship-push .f-visual {
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .curve-images-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .curve-image {
+      position: absolute;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .curve-image:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .curve-image.image-1 {
+      width: 140px;
+      height: 260px;
+      top: 15%;
+      left: 22%;
+      transform: rotate(-8deg) scale(0.9);
+      z-index: 1;
+      opacity: 0.9;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .curve-image.image-2 {
+      width: 160px;
+      height: 300px;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(2deg) scale(1.1);
+      z-index: 3;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .curve-image.image-3 {
+      width: 140px;
+      height: 260px;
+      top: 65%;
+      right: 22%;
+      transform: rotate(8deg) scale(0.9);
+      z-index: 2;
+      opacity: 0.9;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+    .flagship-push:hover { box-shadow: 0 30px 60px rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.3); }
+    
+    /* 旗舰卡片内容区 */
+    .f-content { padding: 24px 32px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; flex: 1; }
+    .f-logo-wrap { margin-bottom: 0 !important; flex-shrink: 0; }
+    .f-content h3 { font-size: 22px; font-weight: 800; margin: 0; flex-shrink: 0; color: #0f172a; white-space: nowrap; }
+    .f-content p { font-size: 14px; line-height: 1.4; margin: 0; flex: 1; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .action-btn { flex-shrink: 0; padding: 10px 20px !important; font-size: 14px !important; }
+    
+    /* 支撑产品卡片 */
+    .support-box {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+      border-radius: 24px;
+      padding: 20px 24px;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(249, 115, 22, 0.08);
+    }
+    .support-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+    .support-box:hover::before {
+      left: 100%;
+    }
+    .support-box > div:first-child { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1; min-width: 0; }
+    .support-box > div:first-child > div:first-child { display: flex; align-items: center; gap: 12px; }
+    .support-box:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 24px 48px rgba(249, 115, 22, 0.15);
+      border-color: rgba(249, 115, 22, 0.3);
+    }
+    .s-icon {
+      width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(135deg, #f97316, #fb923c);
+      display: grid; place-items: center; font-size: 16px; margin-bottom: 0; flex-shrink: 0;
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      color: white;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+      transition: all 0.3s ease;
+    }
+    .support-box:hover .s-icon {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    }
+    .support-box h4 { font-size: 18px; font-weight: 800; color: #0f172a; margin: 0; flex-shrink: 0; white-space: nowrap; }
+    .support-box p { font-size: 14px; color: #64748b; line-height: 1.5; margin: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .support-box .s-tag { margin-top: 0 !important; flex-shrink: 0; white-space: nowrap; font-size: 12px; }
+    
+    /* SVG 动画 */
+    
+    .f-push-chart { width: 60%; filter: drop-shadow(0 4px 10px rgba(249, 115, 22, 0.3)); }
+    .f-push-chart path { stroke: #f97316; stroke-width: 3; fill: none; stroke-dasharray: 300; stroke-dashoffset: 300; animation: chartDraw 3s ease-out forwards infinite; }
+    .f-push-chart circle { opacity: 0; animation: circleFade 3s ease-out forwards infinite; }
+    @keyframes circleFade { 0%, 20% { opacity: 0; } 80% { opacity: 1; } 100% { opacity: 0; } }
+
+    
+    @media (max-width: 1024px) {
+      .eco-dual-core, .eco-supporting { grid-template-columns: 1fr; }
+    }
+
+</style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-row">
+        <div class="nav-left">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfIAAACACAYAAADwDOuuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0QxMEU4RDFBREE2MTFFODlBNzBERTQ5MTMwOUUwRDUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0QxMEU4RDBBREE2MTFFODlBNzBERTQ5MTMwOUUwRDUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEMjlEMUE3RUFEOTIxMUU4OUE3MERFNDkxMzA5RTBENSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEMjlEMUE3RkFEOTIxMUU4OUE3MERFNDkxMzA5RTBENSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqS9mOkAABauSURBVHja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" alt="风行" class="logo" />
+          <button type="button" class="menu-toggle" id="menuToggle">
+            <span class="material-icons">menu</span>
+          </button>
+        </div>
+        
+        <nav class="nav-center" id="navCenter">
+          <a href="产品中心.html" class="nav-link">产品中心</a>
+          <a href="企业动态.html" class="nav-link">企业动态</a>
+          <a href="关于风行.html" class="nav-link">关于我们</a>
+          <a href="帮助中心.html" class="nav-link">帮助中心</a>
+        </nav>
+
+        <div class="nav-actions">
+          <div class="nav-phone-link">
+            <span>联系合作</span>
+          </div>
+        </div>
+      </div>
+      <div class="mega-wrap">
+        <div class="mega-menu" id="megaMenu">
+          <div class="mega-grid">
+            <div class="mega-side">
+              <div class="tag" id="megaEyebrow"></div>
+              <h3 id="megaTitle"></h3>
+              <p id="megaDesc"></p>
+              <button type="button" class="cta">查看栏目</button>
+            </div>
+            <div class="mega-body" id="megaBody"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero parallax-container">
+      <!-- 视差装饰层 -->
+      <div class="parallax-layer blob blob-orange" style="width: 400px; height: 400px; top: -10%; right: -5%;" data-speed="0.15"></div>
+      <div class="parallax-layer blob blob-blue" style="width: 300px; height: 300px; top: 30%; left: -5%;" data-speed="0.2"></div>
+      
+      <div class="hero-bg">
+        <video autoplay muted loop playsinline aria-hidden="true">
+          <source src="https://neirong.funshion.net/xuanchuan/mgc/home/2.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-mask"></div>
+      </div>
+      <div class="container hero-content">
+        <h1 class="hero-title"><span class="line-1">风行AI</span><span class="title-dot">・</span><span class="line-2">内容生态平台</span></h1>
+        <p class="hero-sub">从智能创作到全域分发，让内容增长更高效</p>
+      </div>
+    </section>
+
+    <section class="section parallax-container">
+      <!-- 视差层 -->
+      <div class="parallax-layer blob blob-purple" style="width: 400px; height: 400px; bottom: 0; right: -10%;" data-speed="0.12"></div>
+      
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">双引擎驱动，打通创作与增长全链路</h2>
+          <p class="section-desc">以“橙星梦工厂”为创作核心，以“橙星推”为增长引擎，构建从内容生产到商业变现的闭环生态</p>
+        </div>
+
+        <div class="showcase-container" id="showcaseContainer">
+          <!-- JS 动态渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section parallax-container">
+      <!-- 视差层：多层叠加增强感官 -->
+      <div class="parallax-layer blob blob-orange" style="width: 500px; height: 500px; top: 10%; left: -15%;" data-speed="0.12"></div>
+      <div class="parallax-layer blob blob-blue" style="width: 400px; height: 400px; bottom: 10%; right: -10%;" data-speed="0.18"></div>
+      
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">300+小程序矩阵，放大内容分发与商业增长</h2>
+          <p class="section-desc">风行采用“自营 + 联运”模式，运营超300个小程序，覆盖影视、短剧、漫剧、小说等多品类内容，连接微信、抖音、快手等主流平台，持续放大内容触达、分发效率与商业转化能力</p>
+        </div>
+
+        <div class="mini-program-layout">
+          
+          <div class="mp-content">
+            <div class="achievement-grid">
+              <div class="achievement-card">
+                <span class="data-value">3.5亿+</span>
+                <span class="data-label">全网累计活跃用户</span>
+                <div class="achievement-visual">
+                  <div class="achievement-image-placeholder"></div>
+                </div>
+              </div>
+              <div class="achievement-card">
+                <span class="data-value">Top 1</span>
+                <span class="data-label">抖快小程序榜单</span>
+                <div class="achievement-visual">
+                  <div class="achievement-image-placeholder"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mp-features">
+            </div>
+          </div>
+          
+          <div class="mp-visual">
+            <div class="mp-phone-frame phone-left-side">
+              <div class="mp-phone-notch"></div>
+              <div class="mp-phone-screen">
+                <div class="mp-ui-header">微信小程序</div>
+                <div class="mp-ui-banner" style="background: linear-gradient(135deg, #10b981, #34d399);"></div>
+                <div class="mp-ui-title">热门推荐</div>
+                <div class="mp-ui-grid"><div></div><div></div><div></div><div></div></div>
+                <div class="mp-ui-title">猜你喜欢</div>
+                <div class="mp-ui-list">
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mp-phone-frame phone-right-side">
+              <div class="mp-phone-notch"></div>
+              <div class="mp-phone-screen">
+                <div class="mp-ui-header">快手小程序</div>
+                <div class="mp-ui-banner" style="background: linear-gradient(135deg, #ef4444, #f87171);"></div>
+                <div class="mp-ui-title">热门推荐</div>
+                <div class="mp-ui-grid"><div></div><div></div><div></div><div></div></div>
+                <div class="mp-ui-title">猜你喜欢</div>
+                <div class="mp-ui-list">
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mp-phone-frame phone-main">
+              <div class="mp-phone-notch"></div>
+              <div class="mp-phone-screen">
+                <div class="mp-ui-header">风行精选微短剧</div>
+                <div class="mp-ui-banner"></div>
+                <div class="mp-ui-title">热门推荐</div>
+                <div class="mp-ui-grid"><div></div><div></div><div></div><div></div></div>
+                <div class="mp-ui-title">猜你喜欢</div>
+                <div class="mp-ui-list">
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                  <div class="mp-ui-list-item"><div class="pic"></div><div class="lines"><div class="l1"></div><div class="l2"></div></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mp-float-card float-wx">
+              <div class="icon-circle" style="background:#10b981;">微</div>
+            </div>
+            
+            <div class="mp-float-card float-dy">
+              <div class="icon-circle" style="background:#0f172a;">抖</div>
+            </div>
+            
+            <div class="mp-float-card float-ks">
+              <div class="icon-circle" style="background:#f97316;">快</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部查看全部按钮 -->
+        <div class="view-all-products" style="margin-top: 60px; text-align: center;" data-aos="fade-up">
+          <button class="round-btn" style="padding: 14px 48px; font-size: 16px; border-radius: 4px; display: inline-flex; align-items: center; gap: 8px;">
+            <span>查看更多</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">繁荣的创作者生态，让优质内容跑得更远</h2>
+          <p class="section-desc">风行持续连接影视解说、漫剧创作、短剧导演、AI绘画、内容策划等多类创作者，依托平台工具、内容资源与分发网络，构建更高转化的达人合作生态。橙星推目前已服务<b style="color: var(--orange); font-size: 1.15em; margin: 0 4px; text-shadow: 0 0 1px rgba(249,115,22,0.2);">40万+</b>达人，成为内容推广与增长的重要连接器</p>
+        </div>
+
+        <div class="creator-nebula-wrap" id="nebulaWrap">
+          <div class="nebula-scene" id="nebulaScene">
+            <!-- 核心数据中心 -->
+            <div class="nebula-core">
+              <span class="data-val">40万+</span>
+              <span class="data-label">全网合作达人</span>
+            </div>
+            
+            <!-- 动态生成的轨道与头像节点 -->
+            <div id="nodesContainer" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">OTT大屏内容与服务生态</h2>
+          <p class="section-desc">从手机到大屏，从内容入口到家庭场景，风行持续拓展多终端视听能力</p>
+        </div>
+
+        <div class="scene-layout">
+          <div class="card-soft device-stage">
+            <div class="stage-tag">多终端视频体验</div>
+            <div class="video-player full">
+              <div class="video-placeholder">
+                <div class="play-button large">▶</div>
+                <div class="video-label large">视频播放区域</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scene-grid" id="sceneGrid"></div>
+        </div>
+
+        <!-- 底部查看全部按钮 -->
+        <div class="view-all-products" style="margin-top: 60px; text-align: center;" data-aos="fade-up">
+          <button class="round-btn" style="padding: 14px 48px; font-size: 16px; border-radius: 4px; display: inline-flex; align-items: center; gap: 8px;">
+            <span>查看更多</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section parallax-container">
+      <!-- 视差层 -->
+      <div class="parallax-layer blob blob-blue" style="width: 500px; height: 500px; top: -10%; left: -20%;" data-speed="0.1"></div>
+      
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">内容资产沉淀，驱动长期IP运营价值</h2>
+          <p class="section-desc">风行持续积累影视、短剧、小说、漫剧等多类型内容资源，围绕内容引入、运营、再加工与分发，构建长期可复用的数字内容资产体系</p>
+        </div>
+
+        <div class="card assets-wrap">
+          <div class="asset-grid" id="assetGrid"></div>
+          <div class="stat-bar">
+            <div class="stat-grid" id="statGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">面向企业客户的技术与增长服务</h2>
+          <p class="section-desc">依托 AI 能力、视频技术积累、内容生态与多端分发网络，风行为企业客户提供更完整的内容生产、视频处理、渠道分发与营销增长支持，企业服务已覆盖<b style="color: var(--orange); font-size: 1.15em; margin: 0 4px; text-shadow: 0 0 1px rgba(249,115,22,0.2);">超1000家</b>客户，持续助力企业提升内容效率与商业转化效率。</p>
+        </div>
+
+        <div class="service-grid" id="serviceGrid"></div>
+      </div>
+    </section>
+
+    <section class="section parallax-container">
+      <!-- 视差层 -->
+      <div class="parallax-layer blob blob-orange" style="width: 300px; height: 300px; bottom: 0; right: -5%;" data-speed="0.15"></div>
+      
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">最新动态</h2>
+          <p class="section-desc">聚焦风行在AI内容创作、生态合作、行业交流及企业发展等领域的最新动态，全面呈现公司阶段性成果与业务进展</p>
+        </div>
+
+        <div class="news-grid">
+          <article class="card news-feature">
+            <div class="news-media">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="news-body">
+              <div class="news-meta">2026.02.09 · 新闻发布</div>
+              <h3 class="news-title">火山引擎与风行在线达成深度合作，共启AI内容创作新征程</h3>
+              <p class="news-desc">火山引擎与风行在线深度协同，以豆包大模型及前沿 AI 技术升级橙星梦工厂，打造全流程智能创作生态</p>
+            </div>
+          </article>
+
+          <div class="news-list" id="newsList"></div>
+        </div>
+
+        <!-- 底部查看全部按钮 -->
+        <div class="view-all-products" style="margin-top: 60px; text-align: center;" data-aos="fade-up">
+          <button class="round-btn" style="padding: 14px 48px; font-size: 16px; border-radius: 4px; display: inline-flex; align-items: center; gap: 8px;">
+            <span>更多动态</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section partner-section" data-aos="fade-up">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">生态合作伙伴</h2>
+          <p class="section-desc">与行业顶尖企业及机构深度协同，共建 AI 文娱新生态。</p>
+        </div>
+        
+        <div class="partner-categories">
+          <div class="partner-tabs">
+            <button class="partner-tab active" data-category="ai">AI产学研/技术合作伙伴</button>
+            <button class="partner-tab" data-category="content">内容生态伙伴</button>
+            <button class="partner-tab" data-category="channel">渠道生态伙伴</button>
+            <button class="partner-tab" data-category="ads">广告合作伙伴</button>
+          </div>
+          
+          <div class="partner-content">
+            <!-- AI产学研/技术合作伙伴 -->
+            <div class="partner-category" id="ai">
+              <div class="partner-grid">
+                <div class="partner-logo-card" data-partner="火山引擎">
+                  <img src="" alt="火山引擎" class="partner-logo-img">
+                  <span class="partner-logo-text">火山引擎</span>
+                </div>
+                <div class="partner-logo-card" data-partner="百度智能云">
+                  <img src="" alt="百度智能云" class="partner-logo-img">
+                  <span class="partner-logo-text">百度智能云</span>
+                </div>
+                <div class="partner-logo-card" data-partner="阿里云">
+                  <img src="" alt="阿里云" class="partner-logo-img">
+                  <span class="partner-logo-text">阿里云</span>
+                </div>
+                <div class="partner-logo-card" data-partner="中国移动">
+                  <img src="" alt="中国移动" class="partner-logo-img">
+                  <span class="partner-logo-text">中国移动</span>
+                </div>
+                <div class="partner-logo-card" data-partner="华为云">
+                  <img src="" alt="华为云" class="partner-logo-img">
+                  <span class="partner-logo-text">华为云</span>
+                </div>
+                <div class="partner-logo-card" data-partner="腾讯云">
+                  <img src="" alt="腾讯云" class="partner-logo-img">
+                  <span class="partner-logo-text">腾讯云</span>
+                </div>
+              </div>
+              
+              <!-- 合作伙伴详情内容 -->
+              <div class="partner-detail" id="partnerDetail">
+                <div class="partner-detail-content">
+                  <div class="partner-detail-info">
+                    <h3 id="partnerTitle">合作伙伴详情</h3>
+                    <p id="partnerDescription">请将鼠标悬停在合作伙伴LOGO上查看详细信息。</p>
+                    <div class="partner-detail-features" id="partnerFeatures">
+                      <div class="partner-detail-feature">AI技术支持</div>
+                      <div class="partner-detail-feature">云计算服务</div>
+                      <div class="partner-detail-feature">大数据分析</div>
+                      <div class="partner-detail-feature">智能算法</div>
+                    </div>
+                  </div>
+                  <div class="partner-detail-image">
+                    <img id="partnerImage" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern%20technology%20company%20office%20with%20AI%20dashboard&image_size=landscape_16_9" alt="合作伙伴">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 内容生态伙伴 -->
+            <div class="partner-category" id="content">
+              <div class="partner-grid">
+                <div class="partner-logo-card" data-partner="腾讯微信">
+                  <img src="" alt="腾讯微信" class="partner-logo-img">
+                  <span class="partner-logo-text">腾讯微信</span>
+                </div>
+                <div class="partner-logo-card" data-partner="抖音集团">
+                  <img src="" alt="抖音集团" class="partner-logo-img">
+                  <span class="partner-logo-text">抖音集团</span>
+                </div>
+                <div class="partner-logo-card" data-partner="快手科技">
+                  <img src="" alt="快手科技" class="partner-logo-img">
+                  <span class="partner-logo-text">快手科技</span>
+                </div>
+                <div class="partner-logo-card" data-partner="小红书">
+                  <img src="" alt="小红书" class="partner-logo-img">
+                  <span class="partner-logo-text">小红书</span>
+                </div>
+                <div class="partner-logo-card" data-partner="B站">
+                  <img src="" alt="B站" class="partner-logo-img">
+                  <span class="partner-logo-text">B站</span>
+                </div>
+              </div>
+              
+              <!-- 合作伙伴详情内容 -->
+              <div class="partner-detail" id="partnerDetailContent">
+                <div class="partner-detail-content">
+                  <div class="partner-detail-info">
+                    <h3 id="partnerTitleContent">内容平台详情</h3>
+                    <p id="partnerDescriptionContent">请将鼠标悬停在内容平台LOGO上查看详细信息。</p>
+                    <div class="partner-detail-features" id="partnerFeaturesContent">
+                      <div class="partner-detail-feature">内容分发</div>
+                      <div class="partner-detail-feature">用户互动</div>
+                      <div class="partner-detail-feature">创作者生态</div>
+                      <div class="partner-detail-feature">社交传播</div>
+                    </div>
+                  </div>
+                  <div class="partner-detail-image">
+                    <img id="partnerImageContent" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=social%20media%20platform%20with%20content%20creators&image_size=landscape_16_9" alt="内容平台">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 渠道生态伙伴 -->
+            <div class="partner-category" id="channel">
+              <div class="partner-grid">
+                <div class="partner-logo-card" data-partner="海信电视">
+                  <img src="" alt="海信电视" class="partner-logo-img">
+                  <span class="partner-logo-text">海信电视</span>
+                </div>
+                <div class="partner-logo-card" data-partner="创维电视">
+                  <img src="" alt="创维电视" class="partner-logo-img">
+                  <span class="partner-logo-text">创维电视</span>
+                </div>
+                <div class="partner-logo-card" data-partner="TCL">
+                  <img src="" alt="TCL" class="partner-logo-img">
+                  <span class="partner-logo-text">TCL</span>
+                </div>
+                <div class="partner-logo-card" data-partner="小米电视">
+                  <img src="" alt="小米电视" class="partner-logo-img">
+                  <span class="partner-logo-text">小米电视</span>
+                </div>
+                <div class="partner-logo-card" data-partner="乐视电视">
+                  <img src="" alt="乐视电视" class="partner-logo-img">
+                  <span class="partner-logo-text">乐视电视</span>
+                </div>
+              </div>
+              
+              <!-- 合作伙伴详情内容 -->
+              <div class="partner-detail" id="partnerDetailChannel">
+                <div class="partner-detail-content">
+                  <div class="partner-detail-info">
+                    <h3 id="partnerTitleChannel">硬件渠道详情</h3>
+                    <p id="partnerDescriptionChannel">请将鼠标悬停在硬件渠道LOGO上查看详细信息。</p>
+                    <div class="partner-detail-features" id="partnerFeaturesChannel">
+                      <div class="partner-detail-feature">硬件设备</div>
+                      <div class="partner-detail-feature">终端覆盖</div>
+                      <div class="partner-detail-feature">用户触达</div>
+                      <div class="partner-detail-feature">技术支持</div>
+                    </div>
+                  </div>
+                  <div class="partner-detail-image">
+                    <img id="partnerImageChannel" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=smart%20tv%20display%20with%20modern%20interface&image_size=landscape_16_9" alt="硬件渠道">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 广告合作伙伴 -->
+            <div class="partner-category" id="ads">
+              <div class="partner-grid">
+                <div class="partner-logo-card" data-partner="广告伙伴1">
+                  <img src="" alt="广告伙伴1" class="partner-logo-img">
+                  <span class="partner-logo-text">广告伙伴1</span>
+                </div>
+                <div class="partner-logo-card" data-partner="广告伙伴2">
+                  <img src="" alt="广告伙伴2" class="partner-logo-img">
+                  <span class="partner-logo-text">广告伙伴2</span>
+                </div>
+                <div class="partner-logo-card" data-partner="广告伙伴3">
+                  <img src="" alt="广告伙伴3" class="partner-logo-img">
+                  <span class="partner-logo-text">广告伙伴3</span>
+                </div>
+              </div>
+              
+              <!-- 合作伙伴详情内容 -->
+              <div class="partner-detail" id="partnerDetailAds">
+                <div class="partner-detail-content">
+                  <div class="partner-detail-info">
+                    <h3 id="partnerTitleAds">广告服务详情</h3>
+                    <p id="partnerDescriptionAds">请将鼠标悬停在广告合作伙伴LOGO上查看详细信息。</p>
+                    <div class="partner-detail-features" id="partnerFeaturesAds">
+                      <div class="partner-detail-feature">品牌推广</div>
+                      <div class="partner-detail-feature">精准投放</div>
+                      <div class="partner-detail-feature">效果营销</div>
+                      <div class="partner-detail-feature">数据分析</div>
+                    </div>
+                  </div>
+                  <div class="partner-detail-image">
+                    <img id="partnerImageAds" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=digital%20marketing%20campaign%20with%20data%20analytics&image_size=landscape_16_9" alt="广告服务">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          
+          <div class="footer-brand">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfIAAACACAYAAADwDOuuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDI5RDFBN0VBRDkyMTFFODlBNzBERTQ5MTMwOUUwRDUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDI5RDFBN0ZBRDkyMTFFODlBNzBERTQ5MTMwOUUwRDUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEMjlEMUE3Q0FEOTIxMUU4OUE3MERFNDkxMzA5RTBENSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEMjlEMUE3REFEOTIxMUU4OUE3MERFNDkxMzA5RTBENSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pjq86r0AABaTSURBVHja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" alt="风行" class="footer-logo" style="filter: drop-shadow(0 0 8px rgba(255,255,255,0.1));">
+            <div class="brand-slogan">让内容流动更简单</div>
+            <p class="footer-text">深耕视频领域 20 年，致力于通过 AI 技术重塑文娱生态，为创作者与企业提供全链路智能服务。</p>
+            <div class="footer-social">
+              <div class="social-btn" title="微信"><i class="fa-brands fa-weixin"></i></div>
+              <div class="social-btn" title="抖音"><i class="fa-brands fa-tiktok"></i></div>
+              <div class="social-btn" title="微博"><i class="fa-brands fa-weibo"></i></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="footer-title">产品中心</div>
+            <div class="footer-links">
+              <a href="梦工厂 (2).html">橙星梦工厂</a>
+              <a href="橙星推.html">橙星推</a>
+              <div>小剪刀</div>
+              <div>FunClaw</div>
+              <div>风行 OPC</div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="footer-title">视听平台</div>
+            <div class="footer-links">
+              <div>FUN UI</div>
+              <div>橙子瓣瓣</div>
+              <div>风行视频 APP</div>
+              <div>小程序矩阵</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="footer-title">快速链接</div>
+            <div class="footer-links">
+              <div>关于我们</div>
+              <a href="企业动态.html">企业动态</a>
+              <div>加入风行</div>
+              <a href="政企服务.html">政企服务</a>
+              <a href="联系我们.html">联系我们</a>
+              <div>法律声明</div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="footer-title">联系我们</div>
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="contact-icon-box"><span class="material-icons">location_on</span></div>
+                <div class="contact-info-text">
+                  <b>公司地址</b>
+                  <span>北京市朝阳区安贞西里三区 9 号楼</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon-box"><span class="material-icons">call</span></div>
+                <div class="contact-info-text">
+                  <b>服务热线</b>
+                  <span>010-82087811</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon-box"><span class="material-icons">mail</span></div>
+                <div class="contact-info-text">
+                  <b>商务合作</b>
+                  <span>bd@funshion.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="footer-bottom">
+          <div class="copyright">Copyright © 2005-2026 Funshion. All Rights Reserved. 北京风行在线技术有限公司 版权所有</div>
+          <div class="footer-bottom-links">
+            <a href="隐私政策.html">隐私政策</a>
+            <a href="用户协议.html">用户协议</a>
+            <a href="#">粤 ICP 备 12345678 号</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+
+  <!-- AOS 滚动入场脚本 -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Lenis 平滑滚动脚本 -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <script>
+   const navItems = ["AI・内容生态", "政企服务",  "企业动态", "关于风行", "加入风行"];
+    
+    const menuMeta = {
+      "AI・内容生态": ["AI CONTENT ECOSYSTEM", "覆盖 AI 创作、智能体、分发、视听平台与 IP 经营的完整业务链路。"], 
+      "政企服务": ["G&E SOLUTIONS", "整合技术赋能、营销服务与生态合作，全方位助力合作伙伴业务增长。"], 
+      "企业动态": ["COMPANY UPDATES", "聚焦风行最新新闻发布、媒体报道与官方公告。"], 
+      "关于风行": ["ABOUT FUNSHION", "了解风行的发展历程、公司介绍与联系方式。"], 
+      "加入风行": ["JOIN FUNSHION", "进入招聘与人才发展入口，了解风行的人才机会。"]
+    };
+    
+    const ecoGroups = [
+      ["AI创作", ["橙星梦工厂<span class='hot-tag'>HOT</span>", "小剪刀", "风行OPC"]], 
+      ["AI智能体", ["FunClaw", "Fun Studio"]], 
+      ["全域分发与变现", ["橙星推<span class='new-tag'>NEW</span>", "风帆", "千推"]], 
+      ["风行IP生态", ["影视", "影视短剧化", "微短剧", "小说"]]
+    ];
+    
+    const avGroups = [
+      ["大屏端", ["FUN UI","橙子瓣瓣"]], 
+      ["移动端", ["小程序矩阵","风行视频APP"]], 
+      ["海外业务", ["FunFlow","星海"]]
+    ];
+    
+    const otherMenus = {
+      // "海外业务": [["海外出海", ["短剧出海", "内容分发"]]], 
+      "政企服务": [
+        ["技术服务", ["FUNAI Token", "视频技术云"]], 
+        ["营销服务", ["视频营销"]],
+        ["生态合作", ["政企合作", "校园合作", "行业活动"]]
+      ], 
+      "企业动态": [["企业动态", ["新闻发布", "媒体报道"]]], 
+      "关于风行": [["关于我们", ["公司介绍", "发展历程", "联系我们"]]], 
+      "加入风行": [["人才招聘", ["校园招聘", "社会招聘"]]]
+    }; 
+    const flowSteps = [["灵感", "橙星梦工厂", "AI短剧一站式创作平台", "创作主引擎"], ["创作", "小剪刀", "影视二创智能快剪神器", "高效快剪"], ["智能体", "FunClaw", "视听行业小龙虾 内容经营一轻松搞定", "智能协同"], ["分发", "风行OPC", "数字文化OPC线上线下一体化平台", "一体化平台"], ["变现", "橙星推", "达人推广神器", "商业闭环"]];
+    const sceneItems = [
+      { 
+        name: "FUNUI", 
+        description: "聚焦家庭客厅场景，打造大屏终端内容体验入口",
+        logo: "🎨"
+      },
+      { 
+        name: "橙子瓣瓣", 
+        description: "聚焦泛屏视频消费，持续升级内容分发与观看体验",
+        logo: "🍋"
+      },
+      { 
+        name: "橙子少儿", 
+        description: "聚焦少儿与亲子场景，探索 AI 驱动的泛屏内容体验",
+        logo: "🍊"
+      },
+      { 
+        name: "橙子AI", 
+        description: "聚焦内容消费与互动体验创新，拓展多屏场景下的 AI 应用能力",
+        logo: "🌐"
+      }
+    ];
+    const assetTypes = ["影视", "影视短剧化", "微短剧", "小说"];
+    const assetStats = [["20万+", "小说内容储备"], ["1000+", "合作版权方"], ["40+", "内容品类覆盖"], ["全球化", "运营布局"]];
+    const services = [["FUNAI Token", "提供 AI 能力接入支持，帮助企业提升内容生产与业务协作效率。"], ["视频技术云", "提供视频处理、转码、播放与分发能力支撑，满足多终端业务需求。"], ["视频营销", "围绕平台内容与触达能力，为品牌客户构建更高效的视频营销方案。"]];
+    const news = [["2026.02.09", "新闻发布", "火山引擎与风行在线达成深度合作，共启AI内容创作新征程", "火山引擎与风行在线深度协同，以豆包大模型及前沿 AI 技术升级橙星梦工厂，打造全流程智能创作生态。"], ["2025.03.21", "媒体报道", "“橙星梦工厂”入选2025年度 AI 100 创新产品榜"], ["2025.03.21", "行业活动", "风行“AI剧现”，加速内容行业众创价值涌动——第二届风行 AI 文娱生态大会"]];
+
+    const navCenter = document.getElementById('navCenter');
+    const megaMenu = document.getElementById('megaMenu');
+    const megaEyebrow = document.getElementById('megaEyebrow');
+    const megaTitle = document.getElementById('megaTitle');
+    const megaDesc = document.getElementById('megaDesc');
+    const megaBody = document.getElementById('megaBody');
+
+    let activeNav = 'AI・内容生态';
+    let activeFlow = 0;
+
+    const pageLinks = {
+      "橙星梦工厂": "梦工厂 (2).html",
+      "橙星推": "橙星推.html",
+      "政企服务": "政企服务.html",
+      "企业动态": "企业动态.html",
+      "新闻发布": "企业动态.html#latest",
+      "媒体报道": "企业动态.html#media",
+      "加入风行": "加入风行.html",
+      "校园招聘": "加入风行.html#jobs",
+      "社会招聘": "加入风行.html#jobs",
+      "FUNAI Token": "政企服务.html#token",
+      "视频技术云": "政企服务.html#cloud",
+      "视频营销": "政企服务.html#marketing",
+      "政企合作": "政企服务.html#cooperation",
+      "校园合作": "政企服务.html#cooperation",
+      "行业活动": "政企服务.html#cooperation",
+      "联系我们": "联系我们.html",
+      "公司介绍": "产品中心.html",
+      "发展历程": "产品中心.html"
+    };
+
+    function createMenuList(title, items) {
+      return `
+        <div class="menu-card">
+          <div class="menu-card-title">${title}</div>
+          <div class="menu-card-list">
+            ${items.map(x => {
+              const plainText = x.replace(/<[^>]*>/g, "").trim();
+              const href = pageLinks[plainText] || "#";
+              return `
+              <a href="${href}" class="menu-item">
+                <span>${x}</span>
+              </a>`;
+            }).join("")}
+          </div>
+        </div>`;
+    }
+
+    function renderMegaMenu(key) {
+      const [eyebrow, desc] = menuMeta[key];
+      megaEyebrow.textContent = eyebrow;
+      megaTitle.textContent = key;
+      megaDesc.textContent = desc;
+
+      if (key === 'AI・内容生态') {
+        megaBody.innerHTML = `
+          <div class="menu-columns cols-4">
+            ${ecoGroups.map(([t, items]) => createMenuList(t, items)).join('')}
+          </div>
+          <div class="menu-large-block">
+            <div class="menu-large-title">视听平台</div>
+            <div class="menu-columns cols-3">
+              ${avGroups.map(([t, items]) => createMenuList(t, items)).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        const groups = otherMenus[key] || [];
+        const cols = Math.min(Math.max(groups.length, 1), 3);
+        megaBody.innerHTML = `
+          <div class="menu-columns cols-${cols}">
+            ${groups.map(([t, items]) => createMenuList(t, items)).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function renderNav() {
+      navCenter.innerHTML = navItems.map(item => `
+        <button type="button" class="nav-btn ${item === activeNav ? 'active' : ''}" data-nav="${item}">
+          ${item}
+        </button>
+      `).join('');
+
+      navCenter.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+          activeNav = btn.dataset.nav;
+          renderNav();
+          renderMegaMenu(activeNav);
+          megaMenu.classList.add('open');
+        });
+        btn.addEventListener('click', () => {
+          activeNav = btn.dataset.nav;
+          renderNav();
+          renderMegaMenu(activeNav);
+          megaMenu.classList.add('open');
+        });
+      });
+    }
+
+    document.getElementById('navbar').addEventListener('mouseleave', () => {
+      megaMenu.classList.remove('open');
+    });
+
+    /* 移除已废弃的旧 renderFlow 相关函数 */
+
+    function getSceneIcon(index) {
+      if (index < 2) return '📱';
+      if (index < 5) return '📺';
+      return '🌐';
+    }
+
+    function renderScenes() {
+      document.getElementById('sceneGrid').innerHTML = sceneItems.map((item, index) => `
+        <div data-aos="fade-up" data-aos-delay="${(index % 3) * 100}">
+          <article class="card scene-card" style="height: 100%;">
+            <div class="scene-top">
+              <div class="scene-header">
+                <div class="scene-logo">${item.logo}</div>
+                <div class="scene-title">${item.name}</div>
+              </div>
+              <div class="scene-description">${item.description}</div>
+            </div>
+            <div class="scene-art"></div>
+          </article>
+        </div>
+      `).join('');
+      AOS.refresh();
+    }
+
+    function renderAssets() {
+      document.getElementById('assetGrid').innerHTML = assetTypes.map((item, index) => `
+        <div data-aos="fade-up" data-aos-delay="${(index % 4) * 100}">
+          <article class="card asset-card" style="height: 100%;">
+            <div class="asset-poster"></div>
+            <div class="asset-bottom">
+              <div>
+                <div class="asset-name">${item}</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      `).join('');
+
+      document.getElementById('statGrid').innerHTML = assetStats.map(([value, label], index) => {
+        let numMatch = value.match(/\d+/);
+        if (numMatch) {
+          let num = numMatch[0];
+          let suffix = value.replace(num, '');
+          return `
+            <div data-aos="zoom-in" data-aos-delay="${index * 100}">
+              <div class="stat-card" style="height: 100%;">
+                <div class="stat-value"><span class="roll-num" data-target="${num}">0</span>${suffix}</div>
+                <div class="stat-label">${label}</div>
+              </div>
+            </div>`;
+        } else {
+          return `
+            <div data-aos="zoom-in" data-aos-delay="${index * 100}">
+              <div class="stat-card" style="height: 100%;">
+                <div class="stat-value">${value}</div>
+                <div class="stat-label">${label}</div>
+              </div>
+            </div>`;
+        }
+      }).join('');
+      AOS.refresh();
+    }
+
+    function renderServices() {
+      document.getElementById('serviceGrid').innerHTML = services.map(([title, desc], index) => `
+        <article class="card service-card" data-aos="fade-up" data-aos-delay="${index * 100}">
+          <div class="service-header">
+            <div class="service-icon">💼</div>
+            <div class="service-title">${title}</div>
+          </div>
+          <div class="service-desc">${desc}</div>
+          <div class="service-image">
+            <div class="service-box"></div>
+          </div>
+        </article>
+      `).join('');
+      AOS.refresh();
+    }
+
+    function renderNews() {
+      document.getElementById('newsList').innerHTML = news.slice(1).map(([date, cat, title], index) => `
+        <article class="card news-item" data-aos="fade-left" data-aos-delay="${index * 100}">
+          <div class="news-item-meta"><span>${cat}</span><span>${date}</span></div>
+          <div class="news-item-title"><span>${title}</span></div>
+        </article>
+      `).join('');
+      AOS.refresh();
+    }
+
+    const creators = [
+      { name: "影视解说家", fans: "120W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder1.png" },
+      { name: "漫剧创作者", fans: "85W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder2.png" },
+      { name: "短剧导演", fans: "210W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder3.png" },
+      { name: "AI画师", fans: "45W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder4.png" },
+      { name: "内容策划人", fans: "12W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder5.png" },
+      { name: "剧情大V", fans: "300W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder6.png" },
+      { name: "时尚达人", fans: "150W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder7.png" },
+      { name: "科技博主", fans: "90W+", avatar: "https://neirong.funshion.net/xuanchuan/mgc/home/avatar_placeholder8.png" }
+    ];
+
+    function initDataGalaxy() {
+      const wrap = document.getElementById('nebulaWrap');
+      if (!wrap) return;
+
+      // 1. 清空旧内容，建立瀑布流结构
+      wrap.innerHTML = `
+        <div class="mosaic-container">
+          <div class="mosaic-row row-1"></div>
+          <div class="mosaic-row row-2"></div>
+          <div class="mosaic-row row-3"></div>
+        </div>
+        <div class="nebula-core">
+          <div class="data-val">40万+</div>
+          <div class="data-label">全网合作达人</div>
+        </div>
+      `;
+
+      const rows = wrap.querySelectorAll('.mosaic-row');
+      
+      // 2. 为每一行填充头像
+      rows.forEach((row, rowIndex) => {
+        // 随机打乱创作者数组
+        const shuffled = [...creators].sort(() => Math.random() - 0.5);
+        // 复制一份实现无缝滚动
+        const displayList = [...shuffled, ...shuffled];
+        
+        displayList.forEach(creator => {
+          const item = document.createElement('div');
+          item.className = 'mosaic-item';
+          item.innerHTML = `<img src="${creator.avatar}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4='">`;
+          row.appendChild(item);
+        });
+
+        // 3. 设置不同的滚动速度和方向
+        const duration = 40 + (rowIndex * 10); // 40s, 50s, 60s
+        row.style.animationDuration = `${duration}s`;
+        if (rowIndex === 1) {
+          row.style.animationDirection = 'reverse';
+        }
+      });
+    }
+
+    // 调用执行
+    initDataGalaxy();
+
+    // === 添加数字滚动动画逻辑 ===
+// === 升级版数字滚动动画逻辑 ===
+    function initRollingAnimation() {
+      const numElements = document.querySelectorAll('.roll-num');
+      let hasAnimated = false;
+
+      // 1. 替换为指数缓动函数 (EaseOutExpo)，起步极快，结尾非常平滑有阻尼感
+      function easeOutExpo(t) { 
+        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); 
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          hasAnimated = true; 
+          
+          numElements.forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            
+            // 2. 动态时长：大数字（1000）滚久一点，小数字（20、40）滚快一点，更符合视觉直觉
+            const duration = target > 100 ? 2500 : 1800; 
+            let startTime = null;
+            
+            function animate(currentTime) {
+              if (!startTime) startTime = currentTime;
+              const progress = Math.min((currentTime - startTime) / duration, 1);
+              
+              const currentVal = Math.floor(easeOutExpo(progress) * target);
+              el.innerText = currentVal;
+              
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              } else {
+                el.innerText = target; // 确保最后定格准确无误
+              }
+            }
+            requestAnimationFrame(animate);
+          });
+        }
+      }, { threshold: 0.2 }); 
+
+      const statBar = document.querySelector('.stat-bar');
+      if (statBar) observer.observe(statBar);
+    }
+
+    // 别忘了调用它！(确保放在所有 render 函数的最下方)
+
+    function initMobileMenu() {
+      const menuToggle = document.getElementById('menuToggle');
+      const navCenter = document.getElementById('navCenter');
+      
+      if (menuToggle && navCenter) {
+        menuToggle.addEventListener('click', () => {
+          navCenter.classList.toggle('open');
+          const icon = menuToggle.querySelector('.material-icons');
+          if (navCenter.classList.contains('open')) {
+            icon.textContent = 'close';
+          } else {
+            icon.textContent = 'menu';
+          }
+        });
+      }
+    }
+    
+    function initPartnerTabs() {
+      const tabs = document.querySelectorAll('.partner-tab');
+      const categories = document.querySelectorAll('.partner-category');
+      
+      // 初始化第一个分类为可见状态
+      const firstCategory = document.getElementById('ai');
+      if (firstCategory) {
+        setTimeout(() => {
+          firstCategory.classList.add('active');
+        }, 10);
+      }
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const category = tab.dataset.category;
+          
+          // 更新标签页状态
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          // 更新分类内容显示 - 先隐藏所有分类
+          categories.forEach(cat => {
+            cat.classList.remove('active');
+          });
+          
+          // 延迟显示新分类
+          setTimeout(() => {
+            const activeCategory = document.getElementById(category);
+            if (activeCategory) {
+              activeCategory.classList.add('active');
+            }
+          }, 10);
+        });
+      });
+    }
+
+    // === 视差滚动核心逻辑 (升级版，包含 Hero 缩放) ===
+    function initParallax(lenis) {
+      const layers = document.querySelectorAll('.parallax-layer');
+      const heroVideo = document.querySelector('.hero-bg video');
+      
+      const updateParallax = () => {
+        const viewportHeight = window.innerHeight;
+        const scrolled = window.pageYOffset;
+        
+        layers.forEach(layer => {
+          const parent = layer.closest('.parallax-container');
+          if (!parent) return;
+          const rect = parent.getBoundingClientRect();
+          if (rect.top < viewportHeight && rect.bottom > 0) {
+            const speed = parseFloat(layer.getAttribute('data-speed')) || 0.1;
+            const relativeOffset = rect.top + rect.height / 2 - viewportHeight / 2;
+            const yPos = relativeOffset * speed;
+            layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
+          }
+        });
+
+        if (heroVideo && scrolled < viewportHeight) {
+          const scale = 1 + (scrolled / viewportHeight) * 0.15;
+          heroVideo.style.transform = `scale(${scale})`;
+        }
+      };
+
+      // 如果有 lenis，监听 lenis 的滚动事件
+      if (lenis) {
+        lenis.on('scroll', updateParallax);
+      } else {
+        window.addEventListener('scroll', updateParallax);
+      }
+      window.addEventListener('resize', updateParallax);
+      updateParallax();
+    }
+
+    // === 初始化 Lenis 平滑滚动 ===
+    function initLenis() {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+      
+      return lenis;
+    }
+
+    // === 初始化 AOS 滚动入场 ===
+    function initAOS() {
+      AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 50,
+        delay: 0,
+      });
+    }
+
+
+
+                function renderEcoSystem() {
+      const container = document.getElementById('showcaseContainer');
+      const items = flowSteps; // [0]梦工厂 [1]小剪刀 [2]FunClaw [3]风行OPC [4]橙星推
+
+      container.innerHTML = `
+        <!-- 第一行：双引擎（AI创作 + 商业分发） -->
+        <div class="eco-dual-core">
+          
+          <!-- 1. 橙星梦工厂 (AI Creation Engine) -->
+          <div data-aos="fade-up">
+            <div class="flagship-box flagship-dream" style="height: 100%;">
+              <div class="f-visual">
+                <video autoplay muted loop playsinline>
+                  <source src="https://neirong.funshion.net/xuanchuan/mgc/home/2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="f-content">
+                <div class="f-logo-wrap" style="height: 32px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 32px; height: 32px; background: rgba(249, 115, 22, 0.2); border-radius: 4px; display: grid; place-items: center; color: #f97316;">
+                    <span class="material-icons" style="font-size: 18px;">cloud_queue</span>
+                  </div>
+                  <span style="font-weight: 800; font-size: 14px; letter-spacing: 0.05em; color: #f97316;">橙星</span>
+                </div>
+                <h3>${items[0][1]}</h3>
+                <p>${items[0][2]}</p>
+                <button class="action-btn btn-solid" style="width:fit-content; padding: 12px 24px; font-size:14px; background:#f97316; border:none; border-radius: 4px; box-shadow:0 10px 20px rgba(249, 115, 22, 0.2);">立即创作</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. 橙星推 (Business Growth Engine) -->
+          <div data-aos="fade-up" data-aos-delay="100">
+            <div class="flagship-box flagship-push" style="height: 100%;">
+              <div class="f-visual">
+                <div class="curve-images-container">
+                  <div class="curve-image image-1">
+                    <div class="image-placeholder"></div>
+                  </div>
+                  <div class="curve-image image-2">
+                    <div class="image-placeholder"></div>
+                  </div>
+                  <div class="curve-image image-3">
+                    <div class="image-placeholder"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="f-content">
+                <div class="f-logo-wrap" style="height: 32px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 32px; height: 32px; background: rgba(249, 115, 22, 0.2); border-radius: 4px; display: grid; place-items: center; color: #f97316;">
+                    <span class="material-icons" style="font-size: 18px;">trending_up</span>
+                  </div>
+                  <span style="font-weight: 800; font-size: 14px; letter-spacing: 0.05em; color: #f97316;">PUSH LOGO</span>
+                </div>
+                <h3>${items[4][1]}</h3>
+                <p>${items[4][2]}</p>
+                <button class="action-btn btn-solid" style="width:fit-content; padding: 12px 24px; font-size:14px; background:#f97316; border:none; border-radius: 4px; box-shadow:0 10px 20px rgba(249,115,22,0.2);">获取方案</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 第二行：协同工具矩阵 -->
+        <div class="eco-supporting">
+          
+          <!-- 小剪刀 -->
+          <div data-aos="fade-up" data-aos-delay="200">
+            <div class="support-box" style="height: 100%;">
+              <div>
+                <div>
+                  <div class="s-icon" style="color:#f43f5e;">✂️</div>
+                  <h4>${items[1][1]}</h4>
+                </div>
+                <p>${items[1][2]}</p>
+              </div>
+              <div class="s-tag" style="font-weight:700; color:#f43f5e;">${items[1][3]}</div>
+            </div>
+          </div>
+  
+          <!-- FunClaw -->
+          <div data-aos="fade-up" data-aos-delay="300">
+            <div class="support-box" style="height: 100%;">
+              <div>
+                <div>
+                  <div class="s-icon" style="color:#3b82f6;">🤖</div>
+                  <h4>${items[2][1]}</h4>
+                </div>
+                <p>${items[2][2]}</p>
+              </div>
+              <div class="s-tag" style="font-weight:700; color:#3b82f6;">${items[2][3]}</div>
+            </div>
+          </div>
+  
+          <!-- 风行OPC -->
+          <div data-aos="fade-up" data-aos-delay="400">
+            <div class="support-box" style="height: 100%;">
+              <div>
+                <div>
+                  <div class="s-icon" style="color:#22c55e;">🌐</div>
+                  <h4>${items[3][1]}</h4>
+                </div>
+                <p>${items[3][2]}</p>
+              </div>
+              <div class="s-tag" style="font-weight:700; color:#22c55e;">${items[3][3]}</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 底部查看全部按钮 -->
+        <div class="view-all-products" style="margin-top: 60px; text-align: center;" data-aos="fade-up">
+          <button class="round-btn" style="padding: 14px 48px; font-size: 16px; border-radius: 4px; display: inline-flex; align-items: center; gap: 8px;">
+            <span>产品中心</span>
+          </button>
+        </div>
+      `;
+      AOS.refresh();
+    }
+
+    renderNav();
+    renderMegaMenu(activeNav);
+    renderEcoSystem();
+    renderScenes();
+    renderAssets();
+    renderServices();
+    renderNews();
+    initRollingAnimation();
+    initMobileMenu();
+    initPartnerTabs();
+    initPartnerHover();
+    
+    // 初始化高级动效栈
+    const lenis = initLenis();
+    initParallax(lenis);
+    initAOS();
+    
+    // 合作伙伴悬停交互功能
+    function initPartnerHover() {
+      // 合作伙伴数据
+      const partnerData = {
+        '火山引擎': {
+          title: '火山引擎',
+          description: '火山引擎是字节跳动旗下的云服务平台，提供高性能、低成本的云计算资源和AI技术服务，助力企业数字化转型。',
+          features: ['云计算服务', 'AI算法支持', '大数据分析', '智能推荐'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ByteDance%20Volcano%20Engine%20cloud%20computing%20data%20center&image_size=landscape_16_9'
+        },
+        '百度智能云': {
+          title: '百度智能云',
+          description: '百度智能云依托百度强大的AI技术实力，提供智能云计算、大数据分析、人工智能等全方位的云服务解决方案。',
+          features: ['智能云计算', 'AI技术平台', '大数据处理', '云原生服务'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Baidu%20Intelligent%20Cloud%20AI%20technology%20hub&image_size=landscape_16_9'
+        },
+        '阿里云': {
+          title: '阿里云',
+          description: '阿里云是全球领先的云计算及人工智能科技公司，提供安全、可靠的计算和数据处理能力，帮助企业创新发展。',
+          features: ['云计算服务', '大数据平台', 'AI智能', '物联网解决方案'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alibaba%20Cloud%20data%20center%20modern%20architecture&image_size=landscape_16_9'
+        },
+        '中国移动': {
+          title: '中国移动',
+          description: '中国移动作为全球领先的通信服务提供商，提供5G网络、云计算、大数据等综合信息服务，赋能数字经济发展。',
+          features: ['5G网络服务', '云计算平台', '大数据分析', '物联网连接'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=China%20Mobile%205G%20network%20technology%20center&image_size=landscape_16_9'
+        },
+        '华为云': {
+          title: '华为云',
+          description: '华为云基于华为30多年的ICT技术积累，提供稳定可靠、安全可信、可持续创新的云服务，助力企业数字化转型。',
+          features: ['云计算基础设施', 'AI开发平台', '大数据服务', '云原生应用'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Huawei%20Cloud%20smart%20data%20center&image_size=landscape_16_9'
+        },
+        '腾讯云': {
+          title: '腾讯云',
+          description: '腾讯云依托腾讯20多年的技术积累，提供全球领先的云计算、大数据、人工智能等技术服务，助力企业数字化升级。',
+          features: ['云计算服务', 'AI智能平台', '大数据分析', '安全防护'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Tencent%20Cloud%20digital%20technology%20center&image_size=landscape_16_9'
+        },
+        '腾讯微信': {
+          title: '腾讯微信',
+          description: '微信作为中国领先的社交平台，拥有超过10亿用户，为企业和个人提供社交、支付、生活服务等全方位的移动应用服务。',
+          features: ['社交平台', '微信支付', '小程序生态', '企业微信'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=WeChat%20social%20media%20platform%20interface&image_size=landscape_16_9'
+        },
+        '抖音集团': {
+          title: '抖音集团',
+          description: '抖音集团旗下拥有抖音、TikTok等全球领先的短视频平台，通过AI算法推荐优质内容，连接全球创作者和用户。',
+          features: ['短视频平台', '直播电商', '内容分发', '全球化运营'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Douyin%20short%20video%20platform%20interface&image_size=landscape_16_9'
+        },
+        '快手科技': {
+          title: '快手科技',
+          description: '快手科技打造了中国领先的短视频和直播平台，通过普惠的内容分发机制，连接普通人的生活和创作。',
+          features: ['短视频平台', '直播带货', '内容社区', '社交互动'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Kuaishou%20live%20streaming%20platform&image_size=landscape_16_9'
+        },
+        '小红书': {
+          title: '小红书',
+          description: '小红书是年轻人的生活方式平台和消费决策入口，通过UGC内容分享，帮助用户发现美好生活和消费灵感。',
+          features: ['内容社区', '种草平台', '电商功能', '生活方式分享'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Xiaohongshu%20social%20shopping%20platform&image_size=landscape_16_9'
+        },
+        'B站': {
+          title: 'B站',
+          description: '哔哩哔哩（B站）是中国年轻一代高度聚集的文化社区和视频平台，以ACG内容为核心，涵盖游戏、音乐、科技等多元领域。',
+          features: ['ACG社区', '弹幕文化', '视频创作', '会员服务'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Bilibili%20anime%20community%20interface&image_size=landscape_16_9'
+        },
+        '海信电视': {
+          title: '海信电视',
+          description: '海信电视作为中国领先的电视品牌，提供高品质的智能电视产品和家庭娱乐解决方案，引领智能家居发展。',
+          features: ['智能电视', '画质技术', '智能家居', '内容服务'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Hisense%20smart%20TV%20modern%20living%20room&image_size=landscape_16_9'
+        },
+        '创维电视': {
+          title: '创维电视',
+          description: '创维电视专注于显示技术研发和智能电视生产，提供高品质的视听体验和智能家居解决方案。',
+          features: ['OLED显示', '智能系统', '家庭娱乐', '健康护眼'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Skyworth%20OLED%20smart%20TV%20display&image_size=landscape_16_9'
+        },
+        'TCL': {
+          title: 'TCL',
+          description: 'TCL作为全球领先的智能科技公司，提供电视、手机、空调等智能产品，打造全场景智慧生活解决方案。',
+          features: ['智能电视', '显示技术', '智能家居', '全球布局'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=TCL%20smart%20electronics%20modern%20design&image_size=landscape_16_9'
+        },
+        '小米电视': {
+          title: '小米电视',
+          description: '小米电视以高性价比和智能化为核心，提供丰富的内容生态和智能家居互联体验，成为年轻人的首选。',
+          features: ['高性价比', '智能系统', '内容生态', '智能家居'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Xiaomi%20smart%20TV%20with%20MIUI%20interface&image_size=landscape_16_9'
+        },
+        '乐视电视': {
+          title: '乐视电视',
+          description: '乐视电视专注于互联网智能电视领域，提供丰富的内容资源和创新的用户体验，引领互联网电视发展。',
+          features: ['互联网电视', '内容生态', '智能系统', '大屏体验'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=LeTV%20smart%20TV%20interface&image_size=landscape_16_9'
+        },
+        '广告伙伴1': {
+          title: '广告伙伴1',
+          description: '专业的数字营销服务提供商，为品牌客户提供全方位的广告投放和营销解决方案，助力品牌增长。',
+          features: ['品牌推广', '精准投放', '效果营销', '数据分析'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=digital%20marketing%20agency%20office&image_size=landscape_16_9'
+        },
+        '广告伙伴2': {
+          title: '广告伙伴2',
+          description: '专注于社交媒体营销和内容合作，帮助品牌建立与用户的深度连接，提升品牌影响力。',
+          features: ['社交媒体营销', '内容合作', 'KOL资源', '创意策划'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=social%20media%20marketing%20campaign&image_size=landscape_16_9'
+        },
+        '广告伙伴3': {
+          title: '广告伙伴3',
+          description: '提供全链路广告解决方案，从策略制定到效果优化，为客户创造最大的营销价值。',
+          features: ['广告策略', '媒体投放', '效果监测', '优化服务'],
+          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=advertising%20agency%20creative%20team&image_size=landscape_16_9'
+        }
+      };
+      
+      // 获取所有合作伙伴卡片
+      const partnerCards = document.querySelectorAll('.partner-logo-card');
+      
+      partnerCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          const partnerName = this.getAttribute('data-partner');
+          const partnerInfo = partnerData[partnerName];
+          
+          if (partnerInfo) {
+            // 获取当前分类的详情区域
+            const category = this.closest('.partner-category').id;
+            let detailElement;
+            
+            switch(category) {
+              case 'ai':
+                detailElement = document.getElementById('partnerDetail');
+                break;
+              case 'content':
+                detailElement = document.getElementById('partnerDetailContent');
+                break;
+              case 'channel':
+                detailElement = document.getElementById('partnerDetailChannel');
+                break;
+              case 'ads':
+                detailElement = document.getElementById('partnerDetailAds');
+                break;
+            }
+            
+            if (detailElement) {
+              // 更新详情内容
+              const titleElement = detailElement.querySelector(`#partnerTitle${category === 'ai' ? '' : category.charAt(0).toUpperCase() + category.slice(1)}`);
+              const descElement = detailElement.querySelector(`#partnerDescription${category === 'ai' ? '' : category.charAt(0).toUpperCase() + category.slice(1)}`);
+              const featuresElement = detailElement.querySelector(`#partnerFeatures${category === 'ai' ? '' : category.charAt(0).toUpperCase() + category.slice(1)}`);
+              const imageElement = detailElement.querySelector(`#partnerImage${category === 'ai' ? '' : category.charAt(0).toUpperCase() + category.slice(1)}`);
+              
+              if (titleElement) titleElement.textContent = partnerInfo.title;
+              if (descElement) descElement.textContent = partnerInfo.description;
+              
+              if (featuresElement) {
+                featuresElement.innerHTML = partnerInfo.features.map(feature => `
+                  <div class="partner-detail-feature">${feature}</div>
+                `).join('');
+              }
+              
+              if (imageElement) imageElement.src = partnerInfo.image;
+              
+              // 显示详情区域
+              detailElement.classList.add('show');
+            }
+          }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          // 隐藏所有详情区域
+          document.querySelectorAll('.partner-detail').forEach(detail => {
+            detail.classList.remove('show');
+          });
+        });
+      });
+    }
+
+
+  </script>
+</body>
+</html>
+
+
+

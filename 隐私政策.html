@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>隐私政策 - 风行 AI 文娱生态平台</title>
+  <meta name="description" content="风行AI隐私政策，详细说明我们如何收集、使用、存储和保护您的个人信息。" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --max: 1000px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    ul { list-style: disc; margin-left: 24px; margin-bottom: 24px; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 80px; background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex; align-items: center;
+      transition: all 0.4s;
+    }
+    .navbar.scrolled { height: 70px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .logo { height: 32px; }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-link { font-size: 15px; font-weight: 600; color: var(--text-muted); position: relative; }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .nav-link.active::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
+      background: var(--primary);
+    }
+
+    /* Page Header */
+    .legal-header {
+      padding: 160px 0 80px;
+      background: radial-gradient(circle at 0% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 40%);
+      text-align: center;
+    }
+    .legal-header h1 { font-size: 48px; font-weight: 900; margin-bottom: 16px; }
+    .legal-header p { color: var(--text-muted); font-size: 16px; }
+
+    /* Content Area */
+    .legal-content { padding-bottom: 120px; font-size: 17px; color: var(--text); }
+    .legal-content section { margin-bottom: 60px; }
+    .legal-content h2 { font-size: 24px; font-weight: 800; margin-bottom: 24px; color: var(--text); display: flex; align-items: center; gap: 12px; }
+    .legal-content h2::before { content: ''; width: 4px; height: 24px; background: var(--primary); border-radius: 4px; }
+    .legal-content p { margin-bottom: 24px; line-height: 1.8; }
+    .legal-content .update-time { font-size: 14px; color: var(--text-muted); margin-bottom: 48px; display: block; }
+
+    /* Footer */
+    .footer { padding: 80px 0 40px; background: var(--bg-alt); border-top: 1px solid var(--border); }
+    .footer-bottom { text-align: center; color: var(--text-muted); font-size: 14px; }
+
+    @media (max-width: 768px) {
+      .legal-header { padding: 120px 0 60px; }
+      .legal-header h1 { font-size: 32px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="首页.html"><img src="风行LOGO.png" alt="风行" class="logo" /></a>
+      <div class="nav-links">
+        <a href="首页.html" class="nav-link">首页</a>
+        <a href="产品中心.html" class="nav-link">产品中心</a>
+        <a href="企业动态.html" class="nav-link">企业动态</a>
+        <a href="关于风行.html" class="nav-link">关于我们</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="legal-header" data-aos="fade-up">
+      <h1>隐私政策</h1>
+      <p>您的隐私对我们至关重要。本政策详细说明了风行如何处理您的个人信息。</p>
+    </header>
+
+    <div class="legal-content" data-aos="fade-up">
+      <span class="update-time">最后更新日期：2024年01月01日</span>
+
+      <section>
+        <h2>引言</h2>
+        <p>风行在线（以下简称“我们”）深知个人信息对您的重要性，我们将按照法律法规的规定，保护您的个人信息及隐私安全。本隐私政策适用于风行提供的所有产品和服务。</p>
+      </section>
+
+      <section>
+        <h2>我们收集的信息</h2>
+        <p>在您使用我们的服务时，我们可能会收集以下信息：</p>
+        <ul>
+          <li><strong>账户信息：</strong> 手机号码、电子邮箱、用户名等。</li>
+          <li><strong>设备信息：</strong> 设备型号、操作系统版本、唯一设备标识符（IMEI/IDFA）等。</li>
+          <li><strong>日志信息：</strong> 您的搜索查询内容、IP地址、浏览器类型、访问日期和时间。</li>
+          <li><strong>位置信息：</strong> 经授权后，我们可能会收集您的地理位置信息以提供本地化服务。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>信息的使用方式</h2>
+        <p>我们收集的信息将用于以下目的：</p>
+        <ul>
+          <li>向您提供、维护及改善我们的视听及 AI 创作服务。</li>
+          <li>根据您的兴趣为您推荐个性化内容（如 AI 生成视频风格）。</li>
+          <li>与您沟通，发送服务通知、安全验证及市场营销信息。</li>
+          <li>保护我们的用户、自身及公众的权利、财产或安全。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>信息的保护与存储</h2>
+        <p>我们采用行业领先的安全技术和加密手段（如 SSL 加密、匿名化处理）来保护您的个人信息。您的信息将存储在位于中国境内的安全服务器上，除非获得您的明确授权或法律另有规定，否则不会向第三方提供您的个人信息。</p>
+      </section>
+
+      <section>
+        <h2>您的权利</h2>
+        <p>您对自己的个人信息拥有充分的控制权，包括：</p>
+        <ul>
+          <li>访问、更正或删除您的个人信息。</li>
+          <li>撤回已同意的授权或更改授权范围。</li>
+          <li>注销您的风行账户。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>联系我们</h2>
+        <p>如果您对本隐私政策有任何疑问、意见或建议，请通过以下方式联系我们：</p>
+        <p>邮箱：privacy@funshion.com<br>电话：400-888-XXXX</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2024 风行在线. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+  </script>
+</body>
+</html>
