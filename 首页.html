@@ -983,16 +983,16 @@
     /* ===== 重新设计的高级页脚 (Refined Modern Footer) ===== */
     footer {
       padding: 100px 0 40px; 
-      background: #0f172a; /* 稍微提亮一点的深蓝灰，增加科技感 */
-      color: #fff;
+      background: #f8fafc; /* 改为浅灰色背景 */
+      color: var(--text); /* 改为深色文字 */
       position: relative;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid var(--border);
     }
     /* 增加顶部微妙的科技光晕 */
     footer::before {
       content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
       width: 60%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent);
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
     }
     
     .footer-grid { 
@@ -1005,58 +1005,58 @@
       flex-direction: column;
       align-items: flex-start;
     }
-    .footer-logo { height: 32px; object-fit: contain; margin-bottom: 20px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.1)); }
+    .footer-logo { height: 32px; object-fit: contain; margin-bottom: 20px; filter: none; }
     .brand-slogan {
       font-size: 20px;
       font-weight: 700;
-      color: #f8fafc;
+      color: var(--text);
       margin-bottom: 12px;
       letter-spacing: 0.5px;
-      background: linear-gradient(90deg, #fff, #cbd5e1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
     }
-    .footer-text { color: #94a3b8; font-size: 14px; line-height: 1.8; margin-bottom: 32px; max-width: 280px; }
+    .footer-text { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 32px; max-width: 280px; }
     
     .footer-social { display: flex; gap: 12px; }
     .social-btn {
       width: 36px; height: 36px; border-radius: 50%; /* 改为正圆形，更现代 */
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-      display: grid; place-items: center; color: #cbd5e1;
+      background: #fff; border: 1px solid var(--border);
+      display: grid; place-items: center; color: var(--text-muted);
       transition: all 0.3s ease; cursor: pointer;
     }
     .social-btn:hover { background: var(--orange); border-color: var(--orange); color: #fff; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(249,115,22,0.3); }
 
-    .footer-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 28px; position: relative; letter-spacing: 0.5px; }
+    .footer-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 28px; position: relative; letter-spacing: 0.5px; }
     /* 移除之前的下划线，改用更干净的排版 */
     
-    .footer-links { display: grid; gap: 16px; color: #94a3b8; font-size: 14px; }
-    .footer-links div { cursor: pointer; transition: color .2s ease; display: inline-block; width: fit-content; }
-    .footer-links div:hover { color: var(--orange); } /* 悬停变为品牌色 */
+    .footer-links { display: grid; gap: 16px; color: var(--text-muted); font-size: 14px; }
+    .footer-links div, .footer-links a { cursor: pointer; transition: color .2s ease; display: inline-block; width: fit-content; color: var(--text-muted); }
+    .footer-links div:hover, .footer-links a:hover { color: var(--orange); } /* 悬停变为品牌色 */
     
     /* 重新设计的联系我们列表 */
     .contact-list { display: grid; gap: 20px; }
     .contact-item { display: flex; gap: 12px; align-items: flex-start; }
     .contact-icon-box {
       margin-top: 2px;
-      color: #64748b; font-size: 18px; flex-shrink: 0;
+      color: var(--primary); font-size: 18px; flex-shrink: 0;
     }
-    .contact-info-text { font-size: 14px; color: #94a3b8; line-height: 1.6; white-space: nowrap; }
-    .contact-info-text b { color: #cbd5e1; font-size: 13px; font-weight: 500; }
+    .contact-info-text { font-size: 14px; color: var(--text-muted); line-height: 1.6; white-space: nowrap; }
+    .contact-info-text b { color: var(--text); font-size: 13px; font-weight: 600; }
 
     .footer-bottom {
       margin-top: 80px;
       padding-top: 32px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #64748b;
+      color: var(--text-muted);
       font-size: 13px;
     }
     .footer-bottom-links { display: flex; gap: 32px; }
-    .footer-bottom-links a { color: #64748b; transition: color .2s ease; }
-    .footer-bottom-links a:hover { color: #cbd5e1; }
+    .footer-bottom-links a { color: var(--text-muted); transition: color .2s ease; }
+    .footer-bottom-links a:hover { color: var(--text); }
 
     .fade-in { animation: fadeIn .32s ease; }
     @keyframes fadeIn {
@@ -2617,12 +2617,14 @@
           <div>
             <div class="footer-title">快速链接</div>
             <div class="footer-links">
-              <div>关于我们</div>
+              <a href="关于风行.html">关于我们</a>
               <a href="企业动态.html">企业动态</a>
-              <div>加入风行</div>
+              <a href="加入风行.html">加入风行</a>
               <a href="政企服务.html">政企服务</a>
               <a href="联系我们.html">联系我们</a>
-              <div>法律声明</div>
+              <a href="品牌墙.html">品牌素材</a>
+              <a href="案例中心.html">案例中心</a>
+              <a href="解决方案.html">行业解决方案</a>
             </div>
           </div>
           

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>案例中心 - 风行 AI 文娱生态平台</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --primary-glow: rgba(255, 107, 0, 0.3);
+      --bg: #f7f9fc;
+      --bg-alt: #f8fafc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --line: rgba(15, 23, 42, 0.08);
+      --border: rgba(226, 232, 240, 0.8);
+      --glass: rgba(255, 255, 255, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --max-width: 1240px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; transition: all 0.3s ease; }
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: min(var(--max-width), calc(100% - 48px)); margin: 0 auto; position: relative; }
+    .section { padding: 80px 0; position: relative; }
+    .section-head { max-width: 1000px; margin: 0 auto 60px; text-align: center; }
+    .section-title { font-size: clamp(30px, 4vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .section-desc { color: var(--text-muted); font-size: 18px; max-width: 800px; margin: 0 auto; }
+    
+    .case-hero {
+      padding: 160px 0 100px;
+      background: radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 50%);
+      text-align: center;
+    }
+    .case-hero h1 {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .case-hero p {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .case-filters {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 10px 24px;
+      border-radius: 99px;
+      background: white;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px var(--primary-soft);
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+    }
+    .case-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .case-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-soft);
+    }
+    .case-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: #f1f5f9;
+    }
+    .case-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .case-card:hover .case-image img {
+      transform: scale(1.05);
+    }
+    .case-content {
+      padding: 32px;
+    }
+    .case-tag {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .case-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .case-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .case-stats {
+      display: flex;
+      gap: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .stat-item .val {
+      display: block;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .stat-item .lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .cta-banner {
+      margin-top: 100px;
+      background: linear-gradient(135deg, var(--primary) 0%, #fb923c 100%);
+      border-radius: var(--radius-xl);
+      padding: 80px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px var(--primary-soft);
+    }
+    .cta-banner::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.2), transparent 50%);
+    }
+    .cta-banner h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+    .btn-white {
+      background: white;
+      color: var(--primary);
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-weight: 800;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header class="case-hero">
+    <div class="container">
+      <h1 data-aos="fade-up">赋能千行百业</h1>
+      <p data-aos="fade-up" data-aos-delay="100">探索风行 AI 如何助力合作伙伴实现数智化转型与商业价值增长。</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="case-filters" data-aos="fade-up">
+        <button class="filter-btn active">全部案例</button>
+        <button class="filter-btn">AI 视频创作</button>
+        <button class="filter-btn">政企视听</button>
+        <button class="filter-btn">全域分发</button>
+        <button class="filter-btn">智能营销</button>
+      </div>
+
+      <div class="case-grid">
+        <!-- Case 1 -->
+        <div class="case-card" data-aos="fade-up">
+          <div class="case-image">
+            <img src="配图/橙星梦工厂配图.png" alt="某知名影视工作室案例">
+          </div>
+          <div class="case-content">
+            <span class="case-tag">AI 视频创作</span>
+            <h3 class="case-title">某知名影视工作室：利用 AI 引擎提升 300% 生产效率</h3>
+            <p class="case-desc">通过接入橙星梦工厂全栈 AI 创作工具，该工作室实现了从剧本大纲到分镜视频的自动化生成，大幅缩短了前期开发周期。</p>
+            <div class="case-stats">
+              <div class="stat-item">
+                <span class="val">300%</span>
+                <span class="lbl">效率提升</span>
+              </div>
+              <div class="stat-item">
+                <span class="val">60%</span>
+                <span class="lbl">成本降低</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 2 -->
+        <div class="case-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="case-image">
+            <img src="配图/风行opc.png" alt="省级融媒体中心案例">
+          </div>
+          <div class="case-content">
+            <span class="case-tag">政企视听</span>
+            <h3 class="case-title">省级融媒体中心：构建下一代数智化视听分发平台</h3>
+            <p class="case-desc">风行助力该融媒体中心完成大屏端与移动端的全链路架构升级，通过 AI 智能推荐系统显著提升了用户活跃度。</p>
+            <div class="case-stats">
+              <div class="stat-item">
+                <span class="val">5000万+</span>
+                <span class="lbl">覆盖用户</span>
+              </div>
+              <div class="stat-item">
+                <span class="val">45%</span>
+                <span class="lbl">时长增长</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 3 -->
+        <div class="case-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="case-image">
+            <img src="配图/千推.png" alt="某快消品牌营销案例">
+          </div>
+          <div class="case-content">
+            <span class="case-tag">智能营销</span>
+            <h3 class="case-title">某国民饮品：千推平台助力新品上市即破圈</h3>
+            <p class="case-desc">利用橙星推的智能分发算法，该品牌在短短一周内通过海量短视频矩阵实现了数亿次曝光，直接带动线上销量爆发。</p>
+            <div class="case-stats">
+              <div class="stat-item">
+                <span class="val">2.8亿</span>
+                <span class="lbl">总曝光量</span>
+              </div>
+              <div class="stat-item">
+                <span class="val">12%</span>
+                <span class="lbl">转化率</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-banner" data-aos="zoom-in">
+        <h2>想要成为下一个成功案例？</h2>
+        <p style="color: rgba(255,255,255,0.7); margin-bottom: 32px;">立即联系我们的行业专家，开启您的 AI 赋能之旅。</p>
+        <a href="联系我们.html" class="btn-white">立即咨询</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  </script>
+</body>
+</html>

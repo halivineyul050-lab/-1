@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>行业解决方案 - 风行 AI 文娱生态平台</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --primary-glow: rgba(255, 107, 0, 0.3);
+      --bg: #f7f9fc;
+      --bg-alt: #f8fafc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --line: rgba(15, 23, 42, 0.08);
+      --border: rgba(226, 232, 240, 0.8);
+      --glass: rgba(255, 255, 255, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --max-width: 1240px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; transition: all 0.3s ease; }
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: min(var(--max-width), calc(100% - 48px)); margin: 0 auto; position: relative; }
+    .section { padding: 80px 0; position: relative; }
+    .section-head { max-width: 1000px; margin: 0 auto 60px; text-align: center; }
+    .section-title { font-size: clamp(30px, 4vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .section-desc { color: var(--text-muted); font-size: 18px; max-width: 800px; margin: 0 auto; }
+    
+    .solutions-hero {
+      padding: 160px 0 100px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .solutions-hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.1), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--primary);
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .hero-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .hero-desc {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-top: -60px;
+      position: relative;
+      z-index: 10;
+    }
+    .solution-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .solution-card:hover {
+      transform: translateY(-12px);
+      border-color: var(--primary);
+    }
+    .solution-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 32px;
+    }
+    .solution-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .solution-card p {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .solution-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .solution-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .solution-features i {
+      color: var(--primary);
+      font-size: 14px;
+    }
+    .btn-link {
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cta-section {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      padding: 80px;
+      text-align: center;
+      margin-top: 80px;
+      border: 1px solid var(--border);
+    }
+    .cta-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <section class="solutions-hero">
+    <div class="container">
+      <span class="hero-tag" data-aos="fade-up">Industry Solutions</span>
+      <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">AI 赋能，重塑文娱生态</h1>
+      <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
+        风行提供全方位的 AI 文娱解决方案，助力媒体、企业与创作者实现从内容生产到商业变现的全链路升级。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="solution-grid">
+        <!-- Solution 1 -->
+        <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="solution-icon">
+            <i class="fa-solid fa-clapperboard"></i>
+          </div>
+          <h3>智能影视制作</h3>
+          <p>利用 AI 大模型技术，为影视行业提供从脚本创作、角色建模到视频生成的全流程辅助，极大提升生产效率。</p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check"></i> AI 剧本生成与优化</li>
+            <li><i class="fa-solid fa-check"></i> 数字人虚拟拍摄</li>
+            <li><i class="fa-solid fa-check"></i> 智能视频后期处理</li>
+          </ul>
+          <a href="#" class="btn-link">了解更多 <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <!-- Solution 2 -->
+        <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="solution-icon">
+            <i class="fa-solid fa-bullhorn"></i>
+          </div>
+          <h3>数智化营销</h3>
+          <p>基于 AI 视频生成技术，为企业提供海量短视频内容创作与精准分发方案，助力品牌快速破圈。</p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check"></i> 批量化短视频生成</li>
+            <li><i class="fa-solid fa-check"></i> 跨平台智能投放</li>
+            <li><i class="fa-solid fa-check"></i> 实时舆情监测分析</li>
+          </ul>
+          <a href="#" class="btn-link">了解更多 <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <!-- Solution 3 -->
+        <div class="solution-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="solution-icon">
+            <i class="fa-solid fa-building-columns"></i>
+          </div>
+          <h3>政企视听服务</h3>
+          <p>为政府机构与大中型企业提供定制化视听平台建设与运营服务，构建安全、高效的数智视听窗口。</p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check"></i> 私有化视听平台部署</li>
+            <li><i class="fa-solid fa-check"></i> 内容安全审核系统</li>
+            <li><i class="fa-solid fa-check"></i> 政务宣传 AI 创作工具</li>
+          </ul>
+          <a href="#" class="btn-link">了解更多 <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="cta-section" data-aos="zoom-in">
+        <h2 class="cta-title">准备好开启您的 AI 转型之旅了吗？</h2>
+        <p class="section-desc">联系我们的行业专家，获取为您定制的专属解决方案。</p>
+        <a href="联系我们.html" class="btn-primary">立即咨询专家</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  </script>
+</body>
+</html>

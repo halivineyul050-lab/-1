@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>媒体素材与品牌墙 - 风行 AI 文娱生态平台</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --primary-glow: rgba(255, 107, 0, 0.3);
+      --bg: #f7f9fc;
+      --bg-alt: #f8fafc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --line: rgba(15, 23, 42, 0.08);
+      --border: rgba(226, 232, 240, 0.8);
+      --glass: rgba(255, 255, 255, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --max-width: 1240px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; transition: all 0.3s ease; }
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: min(var(--max-width), calc(100% - 48px)); margin: 0 auto; position: relative; }
+    .section { padding: 80px 0; position: relative; }
+    .section-head { max-width: 1000px; margin: 0 auto 60px; text-align: center; }
+    .section-title { font-size: clamp(30px, 4vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .section-desc { color: var(--text-muted); font-size: 18px; max-width: 800px; margin: 0 auto; }
+    
+    .brand-hero {
+      padding: 160px 0 80px;
+      background: linear-gradient(135deg, #f8fafc 0%, #fff 100%);
+      text-align: center;
+    }
+    .brand-hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .brand-hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .asset-section {
+      padding: 80px 0;
+    }
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .asset-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .asset-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+    }
+    .logo-preview {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+      background: #f8fafc;
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .logo-preview img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .asset-info h3 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .asset-info p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .download-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .btn-download {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .btn-download:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .brand-colors {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+    .color-card {
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .color-swatch {
+      height: 100px;
+    }
+    .color-info {
+      padding: 16px;
+    }
+    .color-info h4 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .color-info code {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <header class="brand-hero">
+    <div class="container">
+      <h1 data-aos="fade-up">品牌素材中心</h1>
+      <p data-aos="fade-up" data-aos-delay="100">欢迎使用风行品牌素材。在此您可以下载官方 LOGO、品牌规范及相关媒体资源。</p>
+    </div>
+  </header>
+
+  <section class="asset-section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">官方标识 (Logo)</h2>
+        <p class="section-desc">请优先使用标准色 LOGO。在深色背景下，请使用反白款。</p>
+      </div>
+
+      <div class="asset-grid">
+        <!-- Asset 1 -->
+        <div class="asset-card" data-aos="fade-up">
+          <div class="logo-preview">
+            <img src="风行LOGO.png" alt="风行标准LOGO">
+          </div>
+          <div class="asset-info">
+            <h3>标准品牌标识</h3>
+            <p>适用于浅色背景的官方标准 LOGO</p>
+            <div class="download-btns">
+              <a href="风行LOGO.png" download class="btn-download"><i class="fa-solid fa-file-image"></i> PNG</a>
+              <a href="#" class="btn-download"><i class="fa-solid fa-file-vector"></i> SVG</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Asset 2 -->
+        <div class="asset-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="logo-preview" style="background: #0f172a;">
+            <img src="风行LOGO.png" alt="风行反白LOGO" style="filter: brightness(0) invert(1);">
+          </div>
+          <div class="asset-info">
+            <h3>反白品牌标识</h3>
+            <p>适用于深色背景的白色 LOGO</p>
+            <div class="download-btns">
+              <a href="#" class="btn-download"><i class="fa-solid fa-file-image"></i> PNG</a>
+              <a href="#" class="btn-download"><i class="fa-solid fa-file-vector"></i> SVG</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Asset 3 -->
+        <div class="asset-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="logo-preview">
+            <img src="配图/橙星推LOGO.png" alt="橙星推LOGO">
+          </div>
+          <div class="asset-info">
+            <h3>橙星推标识</h3>
+            <p>子品牌“橙星推”官方 LOGO</p>
+            <div class="download-btns">
+              <a href="配图/橙星推LOGO.png" download class="btn-download"><i class="fa-solid fa-file-image"></i> PNG</a>
+              <a href="#" class="btn-download"><i class="fa-solid fa-file-vector"></i> SVG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top: 100px;">
+        <h2 class="section-title">品牌标准色</h2>
+        <p class="section-desc">统一的色彩应用是品牌视觉识别的核心。</p>
+      </div>
+
+      <div class="brand-colors">
+        <div class="color-card" data-aos="zoom-in">
+          <div class="color-swatch" style="background: #ff6b00;"></div>
+          <div class="color-info">
+            <h4>风行橙 (Primary)</h4>
+            <code>#FF6B00</code>
+          </div>
+        </div>
+        <div class="color-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="color-swatch" style="background: #0f172a;"></div>
+          <div class="color-info">
+            <h4>深邃蓝 (Dark)</h4>
+            <code>#0F172A</code>
+          </div>
+        </div>
+        <div class="color-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="color-swatch" style="background: #64748b;"></div>
+          <div class="color-info">
+            <h4>中性灰 (Muted)</h4>
+            <code>#64748B</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  </script>
+</body>
+</html>

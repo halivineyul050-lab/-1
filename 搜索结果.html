@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>搜索结果 - 风行 AI 文娱生态平台</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e65100;
+      --primary-soft: rgba(255, 107, 0, 0.1);
+      --primary-glow: rgba(255, 107, 0, 0.3);
+      --bg: #f7f9fc;
+      --bg-alt: #f8fafc;
+      --white: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --line: rgba(15, 23, 42, 0.08);
+      --border: rgba(226, 232, 240, 0.8);
+      --glass: rgba(255, 255, 255, 0.8);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --max-width: 1240px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; transition: all 0.3s ease; }
+    .container { width: min(var(--max-width), calc(100% - 48px)); margin: 0 auto; position: relative; }
+    
+    .search-header {
+      padding: 120px 0 60px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-info {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .search-info span {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .search-box-large {
+      max-width: 800px;
+      position: relative;
+    }
+    .search-box-large input {
+      width: 100%;
+      padding: 18px 24px;
+      padding-right: 120px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 16px;
+      box-shadow: var(--shadow-sm);
+      outline: none;
+    }
+    .search-box-large .btn-search {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      bottom: 8px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .results-container {
+      padding: 60px 0 100px;
+    }
+    .result-item {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .result-item:last-child {
+      border-bottom: none;
+    }
+    .result-category {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .result-title a:hover {
+      color: var(--primary);
+    }
+    .result-excerpt {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 15px;
+      max-width: 900px;
+    }
+    .result-link {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .pagination {
+      margin-top: 60px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .page-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .page-btn:hover, .page-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="search-header">
+    <div class="container">
+      <div class="search-info">关于 <span>“AI 视频创作”</span> 的搜索结果，共找到 12 条</div>
+      <div class="search-box-large">
+        <input type="text" value="AI 视频创作">
+        <button class="btn-search">重新搜索</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-container">
+    <div class="container">
+      <!-- Result 1 -->
+      <div class="result-item">
+        <div class="result-category">产品中心</div>
+        <h3 class="result-title"><a href="产品中心.html">橙星梦工厂 - 全栈 AI 创作引擎</a></h3>
+        <p class="result-excerpt">橙星梦工厂是风行旗下的核心 AI 创作平台，提供从脚本生成到视频渲染的全流程 AI 工具链，助力创作者高效产出高质量视频内容...</p>
+        <div class="result-link">funshion.ai > products > dreamfactory</div>
+      </div>
+
+      <!-- Result 2 -->
+      <div class="result-item">
+        <div class="result-category">企业动态</div>
+        <h3 class="result-title"><a href="动态详情.html">风行 AI 视频技术云正式发布，重塑视听行业生产力</a></h3>
+        <p class="result-excerpt">在近日举办的技术峰会上，风行展示了其最新的 AI 视频处理技术，通过深度学习算法显著提升了视频修复与增强的效率...</p>
+        <div class="result-link">funshion.ai > news > ai-video-cloud</div>
+      </div>
+
+      <!-- Result 3 -->
+      <div class="result-item">
+        <div class="result-category">帮助中心</div>
+        <h3 class="result-title"><a href="帮助中心.html">如何使用 AI 工具快速生成短视频脚本？</a></h3>
+        <p class="result-excerpt">本教程将详细介绍如何在橙星梦工厂中使用 AI 助手功能，只需输入关键词即可在几秒钟内生成完整的视频拍摄脚本...</p>
+        <div class="result-link">funshion.ai > help > scripting-guide</div>
+      </div>
+
+      <div class="pagination">
+        <a href="#" class="page-btn active">1</a>
+        <a href="#" class="page-btn">2</a>
+        <a href="#" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
