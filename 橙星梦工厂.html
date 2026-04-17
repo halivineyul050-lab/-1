@@ -80,7 +80,7 @@
       background: var(--primary);
       color: white;
       padding: 12px 28px;
-      border-radius: 99px;
+      border-radius: var(--radius-sm); /* 从 12px 修改为 8px */
       font-size: 14px;
       font-weight: 700;
       box-shadow: 0 8px 20px var(--primary-glow);
@@ -112,7 +112,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.5) 100%);
+      background: transparent;
       z-index: 1;
     }
     .hero-content {
@@ -319,6 +319,8 @@
     .footer-links a:hover { color: var(--primary); }
     .footer-bottom { padding-top: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 14px; }
 
+
+
     @media (max-width: 1024px) {
       .workflow-grid { grid-template-columns: 1fr; }
       .workflow-grid::before, .workflow-grid::after { display: none; }
@@ -342,18 +344,18 @@
 
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
-      <a href="首页.html" class="logo-box">
+      <a href="https://ai.fun.tv/" class="logo-box">
         <i class="fas fa-star"></i>
         <span>橙星梦工厂</span>
       </a>
       <div class="nav-links">
-        <a href="#workflow" class="nav-link">工作流</a>
-        <a href="#showcase" class="nav-link">场景库</a>
-        <a href="#agents" class="nav-link">AI智能体</a>
+        <a href="#workflow" class="nav-link">如何创作</a>
+        <a href="#showcase" class="nav-link">创作场景</a>
+        <a href="#agents" class="nav-link">智能体协作</a>
         <a href="关于风行.html" class="nav-link">关于我们</a>
       </div>
       <div class="nav-actions">
-        <a href="联系我们.html" class="btn-nav">登入工作台</a>
+        <a href="https://ai.fun.tv/" class="btn-nav">开始创作</a>
       </div>
     </div>
   </nav>
@@ -361,14 +363,14 @@
   <main>
     <section class="hero">
       <video class="hero-video" autoplay muted loop playsinline>
-        <source src="https://neirong.funshion.net/xuanchuan/mgc/home/2.mp4" type="video/mp4">
+        <source src="https://neirong.funshion.net/xuanchuan/mgc/home/1.mp4" type="video/mp4">
       </video>
       <div class="hero-overlay"></div>
       
       <div class="hero-content">
-        <div class="hero-badge" data-aos="fade-down"><i class="fas fa-bolt"></i> 新一代极速 AI 视频生成引擎</div>
-        <h1 class="hero-title" data-aos="zoom-in" data-aos-delay="100">输入想象力，<br>输出<span>大片级视觉</span></h1>
-        <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">告别复杂的渲染与逐帧剪辑。写下你的创意提示词，风行多模态大模型将在数分钟内为你生成 4K 影视级漫剧与短剧。</p>
+        <div class="hero-badge" data-aos="fade-down"><i class="fas fa-bolt"></i>AI短剧一站式创作平台</div>
+        <h1 class="hero-title" data-aos="zoom-in" data-aos-delay="100">让创意直达成片<br><span style="display: block; margin-left: 4em;">让创作一步到位</span></h1>
+        <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">基于八大智能体协同与端到端闭环能力，帮助创作者更高效地完成漫剧与短剧内容生产</p>
         
         <div class="hero-prompt-bar" data-aos="fade-up" data-aos-delay="400">
           <i class="fas fa-wand-magic-sparkles"></i>
@@ -516,7 +518,7 @@
       <div class="container" data-aos="zoom-in">
         <h2>用一杯咖啡的时间，<br>开启您的<span>百集大片时代</span></h2>
         <p>已有 15,000+ 专业创作者正在使用橙星梦工厂重塑视频生产力。</p>
-        <a href="联系我们.html" class="hero-prompt-btn" style="padding: 22px 64px; font-size: 18px; display: inline-flex;">
+        <a href="https://ai.fun.tv/" class="hero-prompt-btn" style="padding: 22px 64px; font-size: 18px; display: inline-flex;">
           免费开始体验 <i class="fas fa-rocket"></i>
         </a>
       </div>
@@ -569,6 +571,8 @@
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
+
+
     AOS.init({ duration: 1000, once: true, offset: 100 });
 
     const navbar = document.getElementById('navbar');
